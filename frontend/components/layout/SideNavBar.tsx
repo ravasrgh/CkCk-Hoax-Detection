@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -17,19 +16,9 @@ export default function SideNavBar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col w-[220px] min-h-screen bg-[#241F17] border-r border-[#3A342B] fixed left-0 top-0 z-30">
-      {/* Top bar with logo */}
-      <div className="h-[42px] bg-[#E8A838] flex items-center px-4">
-        <Image
-          src="/images/CkckLogo.png"
-          alt="CkCk Logo"
-          width={80}
-          height={28}
-          className="object-contain"
-          priority
-        />
-      </div>
-
+    <aside className="hidden md:flex flex-col w-[220px] min-h-screen fixed left-0 top-[42px] z-30"
+      style={{ backgroundColor: "#27231d", borderRight: "1px solid #3A342B" }}
+    >
       <nav className="flex-1 py-2">
         {NAV_ITEMS.map((item) => {
           const active = pathname === item.href;
@@ -39,7 +28,7 @@ export default function SideNavBar() {
               href={item.href}
               className={`flex items-center gap-2 px-4 py-3 text-sm transition-colors font-sora ${
                 active
-                  ? "bg-[#504535] border-l-[3px] border-[#E8A838] text-[#EDE1D4]"
+                  ? "bg-[#504535] border-l-[3px] border-[#c7bcaa] text-[#EDE1D4]"
                   : "border-l-[3px] border-transparent text-[#D5C4AF] hover:bg-[#504535]/50 hover:text-[#EDE1D4]"
               }`}
             >
@@ -54,8 +43,10 @@ export default function SideNavBar() {
 
       <div className="p-4 border-t border-[#3A342B]">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FFC66B] animate-pulse" />
-          <span className="text-[10px] uppercase tracking-widest text-[#E8A838] font-sora font-semibold">
+          <span className="w-2 h-2 rounded-full bg-[#c7bcaa] animate-pulse" />
+          <span className="text-[10px] uppercase tracking-widest font-sora font-semibold"
+            style={{ color: "#c7bcaa" }}
+          >
             OFFLINE
           </span>
         </div>

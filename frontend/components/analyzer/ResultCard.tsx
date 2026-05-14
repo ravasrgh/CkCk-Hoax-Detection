@@ -13,6 +13,7 @@ interface Props {
   totalMs: number;
   onReset: () => void;
   uploadedFile?: File;
+  inputCaption?: string;
 }
 
 export default function ResultCard({
@@ -21,6 +22,7 @@ export default function ResultCard({
   totalMs,
   onReset,
   uploadedFile,
+  inputCaption,
 }: Props) {
   const [copied, setCopied] = useState(false);
   const style = STATUS_STYLES[result.status] || STATUS_STYLES.NETRAL;
@@ -102,31 +104,68 @@ export default function ResultCard({
           KONTEN YANG DIANALISIS
         </p>
 
+        {/* Show uploaded image preview */}
         {uploadedFile && uploadedFile.type.startsWith("image/") && (
           <img
             src={URL.createObjectURL(uploadedFile)}
-            className="max-h-40 mb-3 border border-[#2C2820]"
+            className="max-h-60 mb-3 border border-[#2C2820] rounded"
             alt="Konten yang dianalisis"
           />
         )}
+
+        {/* Show uploaded video player */}
         {uploadedFile && uploadedFile.type.startsWith("video/") && (
-          <div className="flex items-center gap-2 mb-3 text-[#D5C4AF] text-sm">
-            <span>🎥</span>
-            <span className="font-sora">{uploadedFile.name}</span>
-          </div>
-        )}
-        {uploadedFile && uploadedFile.type.startsWith("audio/") && (
-          <div className="flex items-center gap-2 mb-3 text-[#D5C4AF] text-sm">
-            <span>🔊</span>
-            <span className="font-sora">{uploadedFile.name}</span>
+          <div className="mb-3">
+            <video
+              src={URL.createObjectURL(uploadedFile)}
+              controls
+              className="max-h-60 w-full border border-[#2C2820] rounded"
+            />
           </div>
         )}
 
-        <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
-          {result.teks_yang_dianalisis ||
-            result.penjelasan?.split(".")[0] ||
-            "Teks berhasil diekstrak dari konten."}
-        </p>
+        {/* Show uploaded audio player */}
+        {uploadedFile && uploadedFile.type.startsWith("audio/") && (
+          <div className="mb-3">
+            <div className="flex items-center gap-2 text-[#D5C4AF] text-sm mb-2">
+              <span>🔊</span>
+              <span className="font-sora">{uploadedFile.name}</span>
+            </div>
+            <audio
+              src={URL.createObjectURL(uploadedFile)}
+              controls
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {/* Show user's input text */}
+        {inputCaption && inputCaption.trim() && (
+          <p className="text-[#EDE1D4] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+            {inputCaption}
+          </p>
+        )}
+
+        {/* Show OCR extracted text for image/video */}
+        {uploadedFile && (uploadedFile.type.startsWith("image/") || uploadedFile.type.startsWith("video/")) && (
+          <div className="mt-3 p-3 bg-[#1A1712] border border-[#2C2820] rounded">
+            <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] mb-2 font-sora">
+              📝 TEKS DIEKSTRAK (OCR)
+            </p>
+            <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+              {(result as Record<string, unknown>).teks_yang_dianalisis as string ||
+                "Teks berhasil diekstrak dari konten."}
+            </p>
+          </div>
+        )}
+
+        {/* Show text-only fallback when no file uploaded and no caption */}
+        {!uploadedFile && (!inputCaption || !inputCaption.trim()) && (
+          <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+            {(result as Record<string, unknown>).teks_yang_dianalisis as string ||
+              "Teks berhasil diekstrak dari konten."}
+          </p>
+        )}
 
         {result.sumber_teks && result.sumber_teks.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">

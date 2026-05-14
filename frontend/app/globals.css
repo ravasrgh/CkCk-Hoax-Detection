@@ -5,29 +5,32 @@
 :root {
   /* === BACKGROUNDS === */
   --bg-canvas:       #111008;
-  --bg-main:         #18130B;
+  --bg-main:         #1e1a13;
   --bg-card:         #1A1712;
-  --bg-card-alt:     #241F17;
+  --bg-card-alt:     #27231d;
   --bg-card-deep:    #120D07;
   --bg-input:        #0A0704;
-  --bg-sidebar:      #241F17;
+  --bg-sidebar:      #27231d;
   --bg-sidebar-active: #504535;
+  --bg-header:       #27231d;
 
   /* === BORDERS & DIVIDERS === */
   --border-main:     #2C2820;
   --border-sidebar:  #3A342B;
+  --border-header:   #27241e;
 
   /* === TEXT === */
   --text-primary:    #EDE1D4;
   --text-secondary:  #D5C4AF;
   --text-muted:      #9A9080;
   --text-dimmer:     #58524A;
+  --text-slogan:     #c7bcaa;
 
   /* === ACCENT === */
-  --accent-gold:     #E8A838;
-  --accent-gold-dim: #A87820;
-  --accent-amber:    #FFC66B;
-  --accent-amber-btn:#FDBA49;
+  --accent-primary:  #c7bcaa;
+  --accent-dim:      #9A9080;
+  --accent-amber:    #c7bcaa;
+  --accent-amber-btn:#c7bcaa;
 
   /* === STATUS — WASPADAI === */
   --waspadai-bg:     #3D0D0A;
@@ -55,7 +58,7 @@
 
   /* === OFFLINE BADGE === */
   --offline-bg:     #281800;
-  --offline-dot:    #FFC66B;
+  --offline-dot:    #c7bcaa;
 }
 
 body {
@@ -72,8 +75,8 @@ pre {
 }
 
 @keyframes pulse-amber {
-  0%, 100% { border-color: #E8A838; opacity: 1; }
-  50% { border-color: #E8A838; opacity: 0.5; }
+  0%, 100% { border-color: #c7bcaa; opacity: 1; }
+  50% { border-color: #c7bcaa; opacity: 0.5; }
 }
 
 .animate-pulse-amber {

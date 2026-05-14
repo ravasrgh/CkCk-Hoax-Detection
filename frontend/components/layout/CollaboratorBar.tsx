@@ -9,20 +9,23 @@ const LOGOS = [
 
 export default function CollaboratorBar() {
   return (
-    <div className="border-t border-[#2C2820] bg-[#18130B] px-4 py-3 mb-20 md:mb-0">
-      <div className="flex items-center gap-4 flex-wrap">
-        <span className="text-[#9A9080] text-xs font-sora whitespace-nowrap">
+    <div
+      className="fixed bottom-0 left-0 md:left-[220px] right-0 z-20 border-t border-[#2C2820] px-4 hidden md:flex items-center"
+      style={{ backgroundColor: "#1e1a13", height: "4vh", minHeight: "28px", maxHeight: "40px" }}
+    >
+      <div className="flex items-center gap-3">
+        <span className="text-[#9A9080] text-[10px] font-sora whitespace-nowrap">
           Berkolaborasi dengan:
         </span>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {LOGOS.map((logo) => (
-            <div key={logo.alt} className="relative h-6 w-auto opacity-70 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+            <div key={logo.alt} className="relative h-4 w-auto opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
               <Image
                 src={logo.src}
                 alt={logo.alt}
-                height={24}
-                width={80}
-                className="h-6 w-auto object-contain"
+                height={16}
+                width={56}
+                className="h-4 w-auto object-contain"
               />
             </div>
           ))}

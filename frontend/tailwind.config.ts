@@ -13,17 +13,15 @@ const config: Config = {
         mono: ["var(--font-mono)", "monospace"],
       },
       colors: {
-        // Legacy ckck tokens — updated to new hex values
         ckck: {
-          bg: "#18130B",
+          bg: "#1e1a13",
           card: "#1A1712",
           border: "#2C2820",
-          accent: "#E8A838",
+          accent: "#c7bcaa",
           "text-primary": "#EDE1D4",
           "text-muted": "#9A9080",
           "text-code": "#9A9080",
         },
-        // Legacy status tokens — updated to new hex values
         status: {
           "waspadai-bg": "#3D0D0A",
           "waspadai-text": "#FFDAD6",
@@ -34,16 +32,15 @@ const config: Config = {
           "netral-bg": "#3A342B",
           "netral-text": "#9D8E7C",
         },
-        // New flat design tokens from FIX.md
         canvas: "#111008",
-        main: "#18130B",
+        main: "#1e1a13",
         card: "#1A1712",
-        "card-alt": "#241F17",
+        "card-alt": "#27231d",
         "card-deep": "#120D07",
         input: "#0A0704",
         border: "#2C2820",
-        gold: "#E8A838",
-        amber: "#FFC66B",
+        gold: "#c7bcaa",
+        amber: "#c7bcaa",
         "text-primary": "#EDE1D4",
         "text-secondary": "#D5C4AF",
         "text-muted": "#9A9080",

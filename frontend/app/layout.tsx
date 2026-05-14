@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Sora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import HeaderBar from "@/components/layout/HeaderBar";
 import SideNavBar from "@/components/layout/SideNavBar";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import CollaboratorBar from "@/components/layout/CollaboratorBar";
@@ -29,12 +30,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${sora.variable} ${mono.variable}`}>
-      <body className="bg-[#18130B] text-[#EDE1D4] antialiased font-sora">
+      <body className="text-[#EDE1D4] antialiased font-sora" style={{ backgroundColor: "#1e1a13" }}>
+        <HeaderBar />
         <SideNavBar />
-        <main className="md:ml-[220px] min-h-screen pb-20 md:pb-0">
+        <main className="md:ml-[220px] mt-[42px] min-h-screen pb-20 md:pb-[4vh]">
           <div className="px-4 py-6 md:px-8 md:py-8">{children}</div>
-          <CollaboratorBar />
         </main>
+        <CollaboratorBar />
         <MobileBottomNav />
       </body>
     </html>

@@ -28,6 +28,7 @@ export default function AnalyzerPage() {
   const [totalMs, setTotalMs] = useState(0);
   const [error, setError] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [inputCaption, setInputCaption] = useState("");
   const stageTimers = useRef<Record<string, number>>({});
 
   useEffect(() => {
@@ -55,6 +56,7 @@ export default function AnalyzerPage() {
   };
 
   const handleSubmit = async (formData: FormData) => {
+    setInputCaption((formData.get("caption") as string) || "");
     setState("analyzing");
     setError("");
     setResult(null);
@@ -143,6 +145,7 @@ export default function AnalyzerPage() {
           totalMs={totalMs}
           onReset={handleReset}
           uploadedFile={uploadedFile ?? undefined}
+          inputCaption={inputCaption}
         />
       )}
     </div>
