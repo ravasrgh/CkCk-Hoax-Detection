@@ -8,9 +8,14 @@ const MAX_SIZE = 50 * 1024 * 1024;
 interface Props {
   onSubmit: (formData: FormData) => void;
   initialCaption?: string;
+  onFileChange?: (file: File | null) => void;
 }
 
-export default function MediaUploader({ onSubmit, initialCaption = "" }: Props) {
+export default function MediaUploader({
+  onSubmit,
+  initialCaption = "",
+  onFileChange,
+}: Props) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [caption, setCaption] = useState(initialCaption);
@@ -18,19 +23,23 @@ export default function MediaUploader({ onSubmit, initialCaption = "" }: Props) 
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback((f: File) => {
-    setError("");
-    if (f.size > MAX_SIZE) {
-      setError("Ukuran file melebihi batas 50MB.");
-      return;
-    }
-    setFile(f);
-    if (f.type.startsWith("image/")) {
-      setPreview(URL.createObjectURL(f));
-    } else {
-      setPreview(null);
-    }
-  }, []);
+  const handleFile = useCallback(
+    (f: File) => {
+      setError("");
+      if (f.size > MAX_SIZE) {
+        setError("Ukuran file melebihi batas 50MB.");
+        return;
+      }
+      setFile(f);
+      onFileChange?.(f);
+      if (f.type.startsWith("image/")) {
+        setPreview(URL.createObjectURL(f));
+      } else {
+        setPreview(null);
+      }
+    },
+    [onFileChange]
+  );
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -61,11 +70,11 @@ export default function MediaUploader({ onSubmit, initialCaption = "" }: Props) 
 
   return (
     <div className="space-y-4">
-      <div
-        className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors cursor-pointer ${
+      <label
+        className={`block border-2 border-dashed p-8 cursor-pointer transition-all duration-200 ${
           dragOver
-            ? "border-ckck-accent bg-ckck-accent/5"
-            : "border-ckck-border hover:border-ckck-text-muted"
+            ? "border-[#E8A838] bg-[#E8A838]/5"
+            : "border-[#3A342B] hover:border-[#504535] bg-[#0A0704]"
         }`}
         onDragOver={(e) => {
           e.preventDefault();
@@ -87,65 +96,66 @@ export default function MediaUploader({ onSubmit, initialCaption = "" }: Props) 
         />
 
         {file ? (
-          <div className="space-y-3">
+          <div className="space-y-3 text-center">
             {preview && (
               <img
                 src={preview}
                 alt="Preview"
-                className="max-h-48 mx-auto rounded border border-ckck-border"
+                className="max-h-48 mx-auto border border-[#2C2820]"
               />
             )}
             <div className="flex items-center justify-center gap-2">
-              <span className="font-mono text-sm text-ckck-text-primary truncate max-w-[300px]">
+              <span className="text-sm text-[#EDE1D4] font-sora truncate max-w-[300px]">
                 {file.name}
               </span>
               {mediaType && (
-                <span className="px-2 py-0.5 rounded bg-ckck-border font-mono text-[10px] uppercase tracking-widest text-ckck-text-code">
+                <span className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase tracking-widest text-[#9A9080] font-sora">
                   {mediaType}
                 </span>
               )}
             </div>
             <button
               type="button"
-              className="text-xs text-ckck-text-muted hover:text-status-waspadai-text"
+              className="text-xs text-[#9A9080] hover:text-[#FFDAD6] font-sora"
               onClick={(e) => {
                 e.stopPropagation();
                 setFile(null);
                 setPreview(null);
+                onFileChange?.(null);
               }}
             >
               Hapus file
             </button>
           </div>
         ) : (
-          <div>
-            <p className="text-ckck-text-muted font-mono text-sm">
-              Seret & lepas file, atau klik untuk memilih
+          <div className="text-center">
+            <p className="text-[#9A9080] text-sm font-sora">
+              Seret &amp; lepas file, atau klik untuk memilih
             </p>
-            <p className="text-ckck-text-muted text-xs mt-1">
+            <p className="text-[#58524A] text-xs mt-1 font-sora">
               Gambar, Video, Audio — maks 50MB
             </p>
           </div>
         )}
-      </div>
+      </label>
 
       {error && (
-        <p className="text-status-waspadai-text text-sm font-mono">{error}</p>
+        <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
       )}
 
       <textarea
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
         placeholder="Masukkan teks atau caption untuk dianalisis..."
-        className="w-full bg-ckck-card border border-ckck-border rounded-lg p-4 text-sm text-ckck-text-primary placeholder-ckck-text-muted resize-none focus:outline-none focus:border-ckck-accent min-h-[100px]"
+        className="w-full bg-[#0A0704] border border-[#2C2820] p-3 text-sm text-[#EDE1D4] placeholder:text-[#58524A] focus:border-[#E8A838] focus:outline-none resize-none h-24 font-sora"
       />
 
       <button
         onClick={handleSubmit}
         disabled={!file && !caption.trim()}
-        className="w-full py-3 rounded-lg font-mono text-sm uppercase tracking-widest font-bold transition-colors disabled:opacity-30 disabled:cursor-not-allowed bg-ckck-accent text-ckck-bg hover:bg-ckck-accent/90"
+        className="w-full h-[46px] bg-[#E8A838] hover:bg-[#FFC66B] disabled:opacity-40 disabled:cursor-not-allowed text-[#120D07] text-xs font-bold tracking-[0.15em] uppercase transition-colors font-sora"
       >
-        ANALISIS
+        ANALISIS →
       </button>
     </div>
   );

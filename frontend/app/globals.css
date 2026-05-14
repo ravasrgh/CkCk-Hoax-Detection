@@ -2,14 +2,78 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* === BACKGROUNDS === */
+  --bg-canvas:       #111008;
+  --bg-main:         #18130B;
+  --bg-card:         #1A1712;
+  --bg-card-alt:     #241F17;
+  --bg-card-deep:    #120D07;
+  --bg-input:        #0A0704;
+  --bg-sidebar:      #241F17;
+  --bg-sidebar-active: #504535;
+
+  /* === BORDERS & DIVIDERS === */
+  --border-main:     #2C2820;
+  --border-sidebar:  #3A342B;
+
+  /* === TEXT === */
+  --text-primary:    #EDE1D4;
+  --text-secondary:  #D5C4AF;
+  --text-muted:      #9A9080;
+  --text-dimmer:     #58524A;
+
+  /* === ACCENT === */
+  --accent-gold:     #E8A838;
+  --accent-gold-dim: #A87820;
+  --accent-amber:    #FFC66B;
+  --accent-amber-btn:#FDBA49;
+
+  /* === STATUS — WASPADAI === */
+  --waspadai-bg:     #3D0D0A;
+  --waspadai-header: #690005;
+  --waspadai-border: #C8352A;
+  --waspadai-text:   #FFDAD6;
+  --waspadai-text2:  #FFB4AB;
+  --waspadai-tag-bg: #93000A;
+
+  /* === STATUS — TERVERIFIKASI === */
+  --terverifikasi-bg:     #003256;
+  --terverifikasi-text:   #9BCBFF;
+  --terverifikasi-text2:  #AAD4FF;
+  --terverifikasi-tag-bg: #015184;
+
+  /* === STATUS — KONTEKS BERBEDA === */
+  --konteks-bg:     #432C00;
+  --konteks-text:   #FFC66B;
+  --konteks-tag-bg: #5F3F00;
+
+  /* === STATUS — NETRAL === */
+  --netral-bg:      #3A342B;
+  --netral-text:    #9D8E7C;
+  --netral-tag-bg:  #2F2921;
+
+  /* === OFFLINE BADGE === */
+  --offline-bg:     #281800;
+  --offline-dot:    #FFC66B;
+}
+
 body {
-  background-color: #1a1a1a;
-  color: #e8e8e8;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sora), sans-serif;
+}
+
+.font-mono,
+.debug-view,
+code,
+pre {
+  font-family: var(--font-mono), monospace;
 }
 
 @keyframes pulse-amber {
-  0%, 100% { border-color: #C9A84C; opacity: 1; }
-  50% { border-color: #C9A84C; opacity: 0.5; }
+  0%, 100% { border-color: #E8A838; opacity: 1; }
+  50% { border-color: #E8A838; opacity: 0.5; }
 }
 
 .animate-pulse-amber {

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -16,14 +17,17 @@ export default function SideNavBar() {
   const pathname = usePathname();
 
   return (
-    <aside className="hidden md:flex flex-col w-[180px] min-h-screen bg-ckck-bg border-r border-ckck-border fixed left-0 top-0 z-30">
-      <div className="p-4 border-b border-ckck-border">
-        <h1 className="font-mono font-bold text-lg text-ckck-accent tracking-widest">
-          CkCk
-        </h1>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-ckck-text-muted mt-1">
-          FORENSIC ANALYST
-        </p>
+    <aside className="hidden md:flex flex-col w-[220px] min-h-screen bg-[#241F17] border-r border-[#3A342B] fixed left-0 top-0 z-30">
+      {/* Top bar with logo */}
+      <div className="h-[42px] bg-[#E8A838] flex items-center px-4">
+        <Image
+          src="/images/CkckLogo.png"
+          alt="CkCk Logo"
+          width={80}
+          height={28}
+          className="object-contain"
+          priority
+        />
       </div>
 
       <nav className="flex-1 py-2">
@@ -33,14 +37,14 @@ export default function SideNavBar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors ${
+              className={`flex items-center gap-2 px-4 py-3 text-sm transition-colors font-sora ${
                 active
-                  ? "border-l-2 border-ckck-accent text-ckck-accent bg-ckck-accent/5"
-                  : "border-l-2 border-transparent text-ckck-text-muted hover:text-ckck-text-primary"
+                  ? "bg-[#504535] border-l-[3px] border-[#E8A838] text-[#EDE1D4]"
+                  : "border-l-[3px] border-transparent text-[#D5C4AF] hover:bg-[#504535]/50 hover:text-[#EDE1D4]"
               }`}
             >
               <span className="text-sm">{item.icon}</span>
-              <span className="font-mono text-xs uppercase tracking-wider">
+              <span className="text-xs uppercase tracking-wide font-medium">
                 {item.label}
               </span>
             </Link>
@@ -48,10 +52,10 @@ export default function SideNavBar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-ckck-border">
+      <div className="p-4 border-t border-[#3A342B]">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-ckck-accent animate-pulse" />
-          <span className="font-mono text-[10px] uppercase tracking-widest text-ckck-accent">
+          <span className="w-2 h-2 rounded-full bg-[#FFC66B] animate-pulse" />
+          <span className="text-[10px] uppercase tracking-widest text-[#E8A838] font-sora font-semibold">
             OFFLINE
           </span>
         </div>
