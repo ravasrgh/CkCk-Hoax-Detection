@@ -179,6 +179,7 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
             "confidence_valid": probabilities.get("VALID", 0.0),
             "penjelasan": prediction.get("explanation", ""),
             "pola_terdeteksi": pola_list,
+            "teks_aman": safe_text,
             "pii_disensor": pii_result.get("pii_found", False),
             "sumber_teks": sources,
             "metadata_media": {

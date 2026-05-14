@@ -91,7 +91,7 @@ export default function ResultCard({
                 className="text-[10px] font-semibold tracking-[0.15em] uppercase font-sora"
                 style={{ color: style.text, opacity: 0.7 }}
               >
-                TINGKAT KEYAKINAN
+                KEMUNGKINAN HOAKS
               </span>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function ResultCard({
       <div className="grid grid-cols-2 gap-px bg-[#2C2820]">
         <div className="bg-[#1A1712] p-4">
           <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sora">
-            SKOR KEPERCAYAAN
+            KEMUNGKINAN HOAKS
           </p>
           <p className="text-[2.5rem] font-bold font-sora leading-none mt-2" style={{ color: style.text }}>
             {confidence}%
@@ -222,6 +222,21 @@ export default function ResultCard({
           )}
         </div>
       </div>
+
+      {/* 4b. PROTECTED TEXT PREVIEW (If PII triggered) */}
+      {result.pii_disensor && (
+        <div className="border border-[#C8352A]/30 bg-[#3D0D0A]/20 p-4">
+          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#FFDAD6] mb-2 font-sora">
+            🔒 TEKS TERLINDUNGI (PII DISENSOR)
+          </p>
+          <p className="text-[#FFDAD6] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words italic">
+            "{result.teks_aman}"
+          </p>
+          <p className="text-[9px] text-[#9A9080] mt-2 font-sora uppercase tracking-wider">
+            Informasi sensitif telah diganti dengan karakter blok untuk keamanan Anda.
+          </p>
+        </div>
+      )}
 
       {/* 5. POLA LINGUISTIK */}
       {result.pola_terdeteksi.length > 0 && (

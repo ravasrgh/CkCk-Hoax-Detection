@@ -10,6 +10,7 @@ export interface InferenceResult {
   confidence_valid: number;
   penjelasan: string;
   pola_terdeteksi: string[];
+  teks_aman: string;
   pii_disensor: boolean;
   sumber_teks: string[];
   metadata_media: Record<string, unknown>;
