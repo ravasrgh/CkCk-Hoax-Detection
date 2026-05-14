@@ -13,6 +13,7 @@ export interface InferenceResult {
   teks_aman: string;
   pii_disensor: boolean;
   sumber_teks: string[];
+  teks_yang_dianalisis?: string;
   metadata_media: Record<string, unknown>;
 }
 
