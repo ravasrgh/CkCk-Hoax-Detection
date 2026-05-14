@@ -170,9 +170,16 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
                 if "caption_user" not in sources:
                     sources.append("caption_user")
 
-        elif input_type == "audio":
-            text = caption_user or ""
-            sources.append("caption_user")
+        elif input_type == "text_file":
+            try:
+                with open(raw_input, "r", encoding="utf-8", errors="replace") as fh:
+                    text = fh.read()
+                sources.append("text_file")
+            except OSError:
+                return {"error": "File tidak dapat dibaca. Pastikan file tidak rusak.", "status": "ERROR"}
+            if caption_user and caption_user not in text:
+                text = f"{text} {caption_user}".strip()
+                sources.append("caption_user")
         else:
             text = raw_input
             sources.append("teks_langsung")
@@ -196,11 +203,28 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
         probabilities = prediction.get("probabilities", {})
         patterns = prediction.get("patterns", {})
 
+        _CAT_TO_SLUG = {
+            "urgency":     "urgensi_artifisial",
+            "fear":        "fear_mongering",
+            "attribution": "klaim_tanpa_sumber",
+        }
+        seen_slugs: set = set()
         pola_list = []
         if patterns.get("details"):
             for cat, details in patterns["details"].items():
+                if not details:
+                    continue
+                slug = _CAT_TO_SLUG.get(cat, cat)
+                if slug not in seen_slugs:
+                    seen_slugs.add(slug)
+                    pola_list.append(slug)
                 for d in details:
-                    pola_list.append(d.get("description", cat))
+                    if "CAPSLOCK" in d.get("description", "").upper():
+                        if "capslock_emosional" not in seen_slugs:
+                            seen_slugs.add("capslock_emosional")
+                            pola_list.append("capslock_emosional")
+        if pii_result.get("pii_found"):
+            pola_list.append("permintaan_data")
 
         return {
             "status": mapped_status,

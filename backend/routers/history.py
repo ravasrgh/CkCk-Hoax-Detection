@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-from session_store import get_history, clear_history
+from session_store import get_history, get_history_entry, clear_history
 
 router = APIRouter(tags=["history"])
 
@@ -11,6 +11,14 @@ async def list_history():
         return get_history()
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+
+@router.get("/history/{entry_id}")
+async def get_entry(entry_id: str):
+    entry = get_history_entry(entry_id)
+    if entry is None:
+        raise HTTPException(status_code=404, detail="Entry not found")
+    return entry
 
 
 @router.delete("/history")

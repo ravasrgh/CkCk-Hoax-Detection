@@ -2,22 +2,15 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 
+const TEXT_EXTENSIONS = new Set(["txt", "md", "csv", "json", "html", "xml", "rtf"]);
+
 const ACCEPTED_TYPES =
-  "image/*,video/*,audio/*,.jpg,.jpeg,.png,.webp,.mp4,.webm,.mov,.avi,.mp3,.wav,.ogg,.m4a";
+  "image/*,video/*,.jpg,.jpeg,.png,.webp,.mp4,.webm,.mov,.avi,.txt,.md,.csv,.json,.html,.xml,.rtf";
 const MAX_SIZE = 50 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = new Set([
-  "jpg",
-  "jpeg",
-  "png",
-  "webp",
-  "mp4",
-  "webm",
-  "mov",
-  "avi",
-  "mp3",
-  "wav",
-  "ogg",
-  "m4a",
+  "jpg", "jpeg", "png", "webp",
+  "mp4", "webm", "mov", "avi",
+  "txt", "md", "csv", "json", "html", "xml", "rtf",
 ]);
 
 interface Props {
@@ -58,16 +51,9 @@ export default function MediaUploader({
 
   const getMediaType = (f: File) => {
     const ext = getExtension(f.name);
-
-    if (f.type.startsWith("image/") || ["jpg", "jpeg", "png", "webp"].includes(ext)) {
-      return "GAMBAR";
-    }
-    if (f.type.startsWith("video/") || ["mp4", "webm", "mov", "avi"].includes(ext)) {
-      return "VIDEO";
-    }
-    if (f.type.startsWith("audio/") || ["mp3", "wav", "ogg", "m4a"].includes(ext)) {
-      return "AUDIO";
-    }
+    if (f.type.startsWith("image/") || ["jpg", "jpeg", "png", "webp"].includes(ext)) return "GAMBAR";
+    if (f.type.startsWith("video/") || ["mp4", "webm", "mov", "avi"].includes(ext)) return "VIDEO";
+    if (TEXT_EXTENSIONS.has(ext)) return "TEKS";
     return null;
   };
 
@@ -81,7 +67,9 @@ export default function MediaUploader({
       const ext = getExtension(f.name);
 
       if (!ALLOWED_EXTENSIONS.has(ext)) {
-        setError("Format file tidak didukung. Gunakan JPG, PNG, WEBP, MP4, MOV, AVI, MP3, WAV, OGG, atau M4A.");
+        setError(
+          "Format file tidak didukung. Gunakan JPG, PNG, WEBP, MP4, MOV, AVI, atau file teks (TXT, MD, CSV, JSON, HTML, XML, RTF)."
+        );
         clearSelectedFile();
         return;
       }
@@ -97,7 +85,8 @@ export default function MediaUploader({
 
       if (previewUrl) URL.revokeObjectURL(previewUrl);
 
-      if (getMediaType(f) !== "AUDIO") {
+      const type = getMediaType(f);
+      if (type === "GAMBAR" || type === "VIDEO") {
         setPreviewUrl(URL.createObjectURL(f));
       } else {
         setPreviewUrl(null);
@@ -117,7 +106,14 @@ export default function MediaUploader({
   );
 
   const handleSubmit = () => {
+    setError("");
     if (!file && !caption.trim()) return;
+
+    if (!file && caption.trim().length > 0 && caption.trim().length < 10) {
+      setError("Teks terlalu pendek untuk dianalisis. Minimal 10 karakter.");
+      return;
+    }
+
     const fd = new FormData();
     if (file) fd.append("file", file);
     fd.append("caption", caption);
@@ -206,15 +202,11 @@ export default function MediaUploader({
               Seret &amp; lepas file, atau klik untuk memilih
             </p>
             <p className="text-[#58524A] text-xs mt-1 font-sora">
-              Gambar, Video, Audio — maks 50MB
+              Gambar, Video, Teks — maks 50MB
             </p>
           </div>
         )}
       </div>
-
-      {error && (
-        <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
-      )}
 
       <textarea
         value={caption}
@@ -222,6 +214,10 @@ export default function MediaUploader({
         placeholder="Masukkan teks atau caption untuk dianalisis..."
         className="w-full bg-[#0A0704] border border-[#2C2820] p-3 text-sm text-[#EDE1D4] placeholder:text-[#58524A] focus:border-[#E8A838] focus:outline-none resize-none h-24 font-sora"
       />
+
+      {error && (
+        <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
+      )}
 
       <button
         onClick={handleSubmit}

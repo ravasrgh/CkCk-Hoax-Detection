@@ -8,7 +8,6 @@ const ITEMS = [
   { href: "/riwayat", label: "Riwayat", icon: "📋" },
   { href: "/playground", label: "Play", icon: "🧪" },
   { href: "/status", label: "Status", icon: "⚙️" },
-  { href: "/debug", label: "Debug", icon: "🐛" },
 ];
 
 export default function MobileBottomNav() {

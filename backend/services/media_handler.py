@@ -11,13 +11,14 @@ MAX_FILE_SIZE = 50 * 1024 * 1024  # 50MB
 ALLOWED_EXTENSIONS = {
     "jpg", "jpeg", "png", "webp",
     "mp4", "webm", "mov", "avi",
-    "mp3", "wav", "ogg", "m4a",
+    "txt", "md", "csv", "json", "html", "xml", "rtf",
 }
 
 EXTENSION_TO_TYPE = {
     "jpg": "image", "jpeg": "image", "png": "image", "webp": "image",
     "mp4": "video", "webm": "video", "mov": "video", "avi": "video",
-    "mp3": "audio", "wav": "audio", "ogg": "audio", "m4a": "audio",
+    "txt": "text_file", "md": "text_file", "csv": "text_file",
+    "json": "text_file", "html": "text_file", "xml": "text_file", "rtf": "text_file",
 }
 
 

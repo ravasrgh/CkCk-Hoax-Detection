@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useRef, useEffect } from "react";
+import { Fragment, Suspense, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import type { InferenceResult, StageInfo, SSEEvent, PipelineStage } from "@/lib/types";
 import { streamAnalysis } from "@/lib/api";
@@ -16,6 +16,12 @@ const INITIAL_STAGES: StageInfo[] = [
   { name: "OUTPUT", key: "output", status: "pending" },
 ];
 
+const STEPS = [
+  { icon: "⬆", label: "Upload atau ketik konten" },
+  { icon: "🤖", label: "AI menganalisis secara lokal" },
+  { icon: "📊", label: "Dapatkan hasil & penjelasan" },
+];
+
 type PageState = "idle" | "analyzing" | "result";
 
 function AnalyzerContent() {
@@ -29,6 +35,7 @@ function AnalyzerContent() {
   const [error, setError] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [inputCaption, setInputCaption] = useState("");
+  const [hasAnalyzed, setHasAnalyzed] = useState(false);
   const stageTimers = useRef<Record<string, number>>({});
 
   useEffect(() => {
@@ -85,6 +92,7 @@ function AnalyzerContent() {
         setResult(inferenceResult);
         setTotalMs(ms);
         setState("result");
+        setHasAnalyzed(true);
       },
       (err: string) => {
         setError(err);
@@ -122,11 +130,41 @@ function AnalyzerContent() {
       )}
 
       {state === "idle" && (
-        <MediaUploader
-          onSubmit={handleSubmit}
-          initialCaption={sampleText}
-          onFileChange={setUploadedFile}
-        />
+        <>
+          {!hasAnalyzed && (
+            <div className="mb-8 space-y-6">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold font-sora" style={{ color: "#EDE1D4" }}>
+                  Cek sebelum kamu sebar.
+                </h2>
+                <p className="text-sm font-sora mt-2 leading-relaxed" style={{ color: "#9A9080" }}>
+                  CkCk menganalisis teks, gambar, dan video untuk mendeteksi pola hoaks<br />
+                  — sepenuhnya offline, tanpa data keluar dari perangkatmu.
+                </p>
+              </div>
+              <div className="flex items-start justify-center gap-4 text-center">
+                {STEPS.map((step, i) => (
+                  <Fragment key={i}>
+                    <div className="flex flex-col items-center gap-2" style={{ maxWidth: 100 }}>
+                      <span className="text-2xl">{step.icon}</span>
+                      <span className="text-[11px] font-sora leading-tight" style={{ color: "#9A9080" }}>
+                        {step.label}
+                      </span>
+                    </div>
+                    {i < STEPS.length - 1 && (
+                      <span className="mt-3 font-sora" style={{ color: "#504535" }}>→</span>
+                    )}
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          )}
+          <MediaUploader
+            onSubmit={handleSubmit}
+            initialCaption={sampleText}
+            onFileChange={setUploadedFile}
+          />
+        </>
       )}
 
       {state === "analyzing" && (

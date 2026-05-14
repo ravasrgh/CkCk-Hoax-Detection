@@ -9,7 +9,6 @@ const NAV_ITEMS = [
   { href: "/tentang", label: "Tentang", icon: "ℹ️" },
   { href: "/playground", label: "Playground", icon: "🧪" },
   { href: "/status", label: "Status Sistem", icon: "⚙️" },
-  { href: "/debug", label: "Tampilan Debug", icon: "🐛" },
 ];
 
 export default function SideNavBar() {

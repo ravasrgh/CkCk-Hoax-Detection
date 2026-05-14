@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { InferenceResult, StageInfo } from "@/lib/types";
 import { STATUS_STYLES } from "@/lib/statusStyles";
 import PipelineProgress from "./PipelineProgress";
@@ -16,6 +16,57 @@ interface Props {
   inputCaption?: string;
 }
 
+const CIRCUMFERENCE = 2 * Math.PI * 40; // r=40
+
+function ConfidenceGauge({ confidence, color }: { confidence: number; color: string }) {
+  const [animated, setAnimated] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setAnimated(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  const offset = animated
+    ? CIRCUMFERENCE * (1 - confidence / 100)
+    : CIRCUMFERENCE;
+
+  return (
+    <svg viewBox="0 0 100 100" width="96" height="96" className="block mx-auto">
+      {/* Track */}
+      <circle
+        cx="50" cy="50" r="40"
+        fill="none"
+        stroke="#2C2820"
+        strokeWidth="8"
+      />
+      {/* Fill */}
+      <circle
+        cx="50" cy="50" r="40"
+        fill="none"
+        stroke={color}
+        strokeWidth="8"
+        strokeLinecap="round"
+        strokeDasharray={CIRCUMFERENCE}
+        strokeDashoffset={offset}
+        transform="rotate(-90 50 50)"
+        style={{ transition: "stroke-dashoffset 0.8s ease-out" }}
+      />
+      {/* Label */}
+      <text
+        x="50" y="50"
+        dominantBaseline="central"
+        textAnchor="middle"
+        fontSize="18"
+        fontWeight="700"
+        fontFamily="var(--font-sora, sans-serif)"
+        fill={color}
+      >
+        {confidence}%
+      </text>
+    </svg>
+  );
+}
+
 export default function ResultCard({
   result,
   stages,
@@ -25,6 +76,7 @@ export default function ResultCard({
   inputCaption,
 }: Props) {
   const [copied, setCopied] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
   const style = STATUS_STYLES[result.status] || STATUS_STYLES.NETRAL;
   const confidence = Math.round(result.confidence_hoax * 100);
 
@@ -80,20 +132,6 @@ export default function ResultCard({
             >
               {style.label}
             </h2>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span
-                className="text-[2.5rem] font-bold font-sora leading-none"
-                style={{ color: style.text }}
-              >
-                {confidence}%
-              </span>
-              <span
-                className="text-[10px] font-semibold tracking-[0.15em] uppercase font-sora"
-                style={{ color: style.text, opacity: 0.7 }}
-              >
-                KEMUNGKINAN HOAKS
-              </span>
-            </div>
           </div>
         </div>
       </div>
@@ -104,7 +142,6 @@ export default function ResultCard({
           KONTEN YANG DIANALISIS
         </p>
 
-        {/* Show uploaded image preview */}
         {uploadedFile && uploadedFile.type.startsWith("image/") && (
           <img
             src={URL.createObjectURL(uploadedFile)}
@@ -113,7 +150,6 @@ export default function ResultCard({
           />
         )}
 
-        {/* Show uploaded video player */}
         {uploadedFile && uploadedFile.type.startsWith("video/") && (
           <div className="mb-3">
             <video
@@ -124,29 +160,12 @@ export default function ResultCard({
           </div>
         )}
 
-        {/* Show uploaded audio player */}
-        {uploadedFile && uploadedFile.type.startsWith("audio/") && (
-          <div className="mb-3">
-            <div className="flex items-center gap-2 text-[#D5C4AF] text-sm mb-2">
-              <span>🔊</span>
-              <span className="font-sora">{uploadedFile.name}</span>
-            </div>
-            <audio
-              src={URL.createObjectURL(uploadedFile)}
-              controls
-              className="w-full"
-            />
-          </div>
-        )}
-
-        {/* Show user's input text */}
         {inputCaption && inputCaption.trim() && (
           <p className="text-[#EDE1D4] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
             {inputCaption}
           </p>
         )}
 
-        {/* Show OCR extracted text for image/video */}
         {uploadedFile && (uploadedFile.type.startsWith("image/") || uploadedFile.type.startsWith("video/")) && (
           <div className="mt-3 p-3 bg-[#1A1712] border border-[#2C2820] rounded">
             <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] mb-2 font-sora">
@@ -158,7 +177,6 @@ export default function ResultCard({
           </div>
         )}
 
-        {/* Show text-only fallback when no file uploaded and no caption */}
         {!uploadedFile && (!inputCaption || !inputCaption.trim()) && (
           <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
             {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
@@ -184,14 +202,12 @@ export default function ResultCard({
 
       {/* 4. SKOR & PII (2 kolom) */}
       <div className="grid grid-cols-2 gap-px bg-[#2C2820]">
-        <div className="bg-[#1A1712] p-4">
-          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sora">
+        <div className="bg-[#1A1712] p-4 flex flex-col items-center justify-center">
+          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sora mb-3">
             KEMUNGKINAN HOAKS
           </p>
-          <p className="text-[2.5rem] font-bold font-sora leading-none mt-2" style={{ color: style.text }}>
-            {confidence}%
-          </p>
-          <p className="text-xs text-[#9A9080] mt-1 font-sora">
+          <ConfidenceGauge confidence={confidence} color={style.gaugeColor} />
+          <p className="text-xs text-[#9A9080] mt-2 font-sora">
             Total: {inferenceMs ?? totalMs}ms
           </p>
         </div>
@@ -274,6 +290,21 @@ export default function ResultCard({
       <p className="text-center text-xs text-[#9A9080] font-sora py-2">
         🔒 Analisis dilakukan sepenuhnya di perangkat ini. Data tidak pernah keluar.
       </p>
+
+      {/* 10. DEBUG TOGGLE */}
+      <div>
+        <button
+          onClick={() => setShowDebug((v) => !v)}
+          className="w-full h-[36px] bg-[#120D07] hover:bg-[#1A1712] border border-[#2C2820] text-[10px] font-semibold tracking-[0.15em] uppercase text-[#58524A] hover:text-[#9A9080] transition-colors font-sora"
+        >
+          {showDebug ? "▲ SEMBUNYIKAN DEBUG" : "▼ DEBUG"}
+        </button>
+        {showDebug && (
+          <pre className="text-[10px] bg-[#0A0704] border border-[#2C2820] border-t-0 p-3 overflow-x-auto font-mono text-[#9A9080] whitespace-pre-wrap leading-relaxed">
+            {JSON.stringify(result, null, 2)}
+          </pre>
+        )}
+      </div>
     </div>
   );
 }

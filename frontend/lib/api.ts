@@ -13,10 +13,14 @@ export async function streamAnalysis(
   onComplete: (result: InferenceResult, totalMs: number) => void,
   onError: (err: string) => void
 ): Promise<void> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 30_000);
+
   try {
     const response = await fetch(`${BASE}/analyze/stream`, {
       method: "POST",
       body: formData,
+      signal: controller.signal,
     });
 
     if (!response.ok) {
@@ -64,11 +68,13 @@ export async function streamAnalysis(
       }
     }
   } catch (e) {
-    onError(
-      e instanceof Error
-        ? `Backend tidak tersedia: ${e.message}`
-        : "Backend tidak tersedia."
-    );
+    if (e instanceof Error && e.name === "AbortError") {
+      onError("Analisis memakan waktu terlalu lama. Coba lagi.");
+    } else {
+      onError("Model AI belum siap. Pastikan backend sudah berjalan.");
+    }
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 

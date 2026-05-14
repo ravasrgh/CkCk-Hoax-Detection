@@ -10,6 +10,7 @@ export interface StatusStyle {
   icon: string;
   iconColor: string;
   label: string;
+  gaugeColor: string;
 }
 
 export const STATUS_STYLES: Record<InferenceStatus, StatusStyle> = {
@@ -23,6 +24,7 @@ export const STATUS_STYLES: Record<InferenceStatus, StatusStyle> = {
     icon: "✕",
     iconColor: "#C8352A",
     label: "WASPADAI",
+    gaugeColor: "#C8352A",
   },
   TERVERIFIKASI: {
     headerBg: "#003256",
@@ -34,6 +36,7 @@ export const STATUS_STYLES: Record<InferenceStatus, StatusStyle> = {
     icon: "✓",
     iconColor: "#9BCBFF",
     label: "TERVERIFIKASI",
+    gaugeColor: "#015184",
   },
   KONTEKS_BERBEDA: {
     headerBg: "#432C00",
@@ -45,6 +48,7 @@ export const STATUS_STYLES: Record<InferenceStatus, StatusStyle> = {
     icon: "⚡",
     iconColor: "#FFC66B",
     label: "KONTEKS BERBEDA",
+    gaugeColor: "#FFC66B",
   },
   NETRAL: {
     headerBg: "#2F2921",
@@ -56,5 +60,6 @@ export const STATUS_STYLES: Record<InferenceStatus, StatusStyle> = {
     icon: "?",
     iconColor: "#9D8E7C",
     label: "NETRAL",
+    gaugeColor: "#504535",
   },
 };

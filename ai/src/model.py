@@ -226,27 +226,47 @@ class HoaxDetector:
 
         if status == STATUS_TERVERIFIKASI:
             explanation_parts.append(
-                f"Model mendeteksi konten ini sebagai valid dengan tingkat kepercayaan {valid_conf*100:.1f}%."
+                "Pola bahasa konten ini konsisten dengan konten informatif. "
+                "Tidak ditemukan indikasi manipulasi linguistik."
             )
         elif status == STATUS_KONTEKS_BERBEDA:
             explanation_parts.append(
-                f"Model memberikan kepercayaan {valid_conf*100:.1f}% bahwa konten ini valid, "
-                "namun belum cukup tinggi untuk verifikasi penuh. Disarankan untuk mengecek konteks tambahan."
+                "Konten memiliki elemen yang valid namun skor kepercayaan berada di zona abu-abu. "
+                "Kemungkinan konteks asli berbeda dari cara konten ini disebarkan."
             )
         elif status == STATUS_BELUM_WASPADAI:
-            explanation_parts.append(
-                f"Model mendeteksi kemungkinan hoaks dengan kepercayaan {hoax_conf*100:.1f}%."
-            )
-            # Add pattern explanations
+            cat_labels = {
+                "urgency": "urgensi palsu",
+                "fear": "fear-mongering",
+                "attribution": "atribusi tidak terverifikasi",
+            }
+            found_cats = []
+            found_keywords = []
             for cat, details in rule_summary["details"].items():
-                patterns_found = [d["description"] for d in details[:3]]  # Limit to 3 per category
+                if details:
+                    found_cats.append(cat_labels.get(cat, cat))
+                    for d in details[:2]:
+                        kw = d.get("pattern", "")
+                        # Keep only plain-text keywords, skip regex-heavy patterns
+                        kw_clean = kw.replace(r"\b", "").replace("\\s+", " ").strip()
+                        if kw_clean and not any(c in kw_clean for c in r"?+{}[]()|^$"):
+                            found_keywords.append(f'"{kw_clean}"')
+            cats_str = " dan ".join(found_cats) if found_cats else "manipulatif"
+            if found_keywords:
+                kw_str = ", ".join(found_keywords[:3])
                 explanation_parts.append(
-                    f"Pola {cat} terdeteksi: " + "; ".join(patterns_found) + "."
+                    f"Konten ini menggunakan pola {cats_str} (terdeteksi kata seperti {kw_str}). "
+                    "Teknik ini umum digunakan untuk mendorong penyebaran tanpa verifikasi."
+                )
+            else:
+                explanation_parts.append(
+                    f"Konten ini mengandung pola {cats_str}. "
+                    "Teknik ini umum digunakan untuk mendorong penyebaran tanpa verifikasi."
                 )
         else:  # NETRAL
             explanation_parts.append(
-                "Tidak cukup bukti untuk mengklasifikasikan konten ini secara definitif. "
-                "Disarankan verifikasi manual melalui sumber terpercaya."
+                "Tidak ditemukan pola manipulatif. Namun tetap verifikasi melalui "
+                "Turnbackhoax.id atau Cekfakta.com untuk memastikan."
             )
 
         return {
