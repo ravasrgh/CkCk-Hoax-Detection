@@ -8,7 +8,7 @@ from services.config_manager import read_config
 
 AI_REPO_PATH = os.environ.get(
     "CKCK_AI_PATH",
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../CkCk-Hoax-Detection-AI"))
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../../ai"))
 )
 
 sys.path.insert(0, AI_REPO_PATH)
