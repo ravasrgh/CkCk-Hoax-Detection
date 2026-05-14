@@ -27,6 +27,7 @@ export default function AnalyzerPage() {
   const [result, setResult] = useState<InferenceResult | null>(null);
   const [totalMs, setTotalMs] = useState(0);
   const [error, setError] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const stageTimers = useRef<Record<string, number>>({});
 
   useEffect(() => {
@@ -94,6 +95,7 @@ export default function AnalyzerPage() {
     setState("idle");
     setResult(null);
     setError("");
+    setUploadedFile(null);
     setStages(INITIAL_STAGES.map((s) => ({ ...s, status: "pending", timeMs: undefined })));
   };
 
@@ -101,10 +103,10 @@ export default function AnalyzerPage() {
     <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="font-mono text-xs uppercase tracking-widest text-ckck-text-muted">
+          <h1 className="text-xs uppercase tracking-widest text-[#9A9080] font-sora font-semibold">
             ANALISIS KONTEN
           </h1>
-          <p className="text-sm text-ckck-text-muted mt-1">
+          <p className="text-sm text-[#9A9080] mt-1 font-sora">
             Deteksi hoaks dengan AI — sepenuhnya offline
           </p>
         </div>
@@ -112,19 +114,23 @@ export default function AnalyzerPage() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 rounded-lg bg-status-waspadai-bg border border-status-waspadai-text/30">
-          <p className="text-status-waspadai-text text-sm font-mono">{error}</p>
+        <div className="mb-4 p-4 bg-[#3D0D0A] border border-[#C8352A]/30">
+          <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
         </div>
       )}
 
       {state === "idle" && (
-        <MediaUploader onSubmit={handleSubmit} initialCaption={sampleText} />
+        <MediaUploader
+          onSubmit={handleSubmit}
+          initialCaption={sampleText}
+          onFileChange={setUploadedFile}
+        />
       )}
 
       {state === "analyzing" && (
         <div className="space-y-4">
           <PipelineProgress stages={stages} />
-          <p className="text-center text-sm text-ckck-text-muted font-mono animate-pulse">
+          <p className="text-center text-sm text-[#9A9080] font-sora animate-pulse">
             Menganalisis konten...
           </p>
         </div>
@@ -136,6 +142,7 @@ export default function AnalyzerPage() {
           stages={stages}
           totalMs={totalMs}
           onReset={handleReset}
+          uploadedFile={uploadedFile ?? undefined}
         />
       )}
     </div>
