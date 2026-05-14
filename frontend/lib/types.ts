@@ -12,6 +12,7 @@ export interface InferenceResult {
   pola_terdeteksi: string[];
   pii_disensor: boolean;
   sumber_teks: string[];
+  teks_yang_dianalisis?: string;
   metadata_media: Record<string, unknown>;
 }
 

@@ -47,6 +47,6 @@ training:
   learning_rate: 2.0e-05
   save_steps: 500
   seed: 42
-  version: v4
+  version: v2
   warmup_ratio: 0.1
   weight_decay: 0.01

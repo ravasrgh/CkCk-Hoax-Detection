@@ -180,6 +180,7 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
             "penjelasan": prediction.get("explanation", ""),
             "pola_terdeteksi": pola_list,
             "pii_disensor": pii_result.get("pii_found", False),
+            "teks_yang_dianalisis": safe_text,
             "sumber_teks": sources,
             "metadata_media": {
                 **ocr_meta,
