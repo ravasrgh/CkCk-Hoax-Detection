@@ -1,9 +1,24 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 
-const ACCEPTED_TYPES = "image/*,video/*,audio/*";
+const ACCEPTED_TYPES =
+  "image/*,video/*,audio/*,.jpg,.jpeg,.png,.webp,.mp4,.webm,.mov,.avi,.mp3,.wav,.ogg,.m4a";
 const MAX_SIZE = 50 * 1024 * 1024;
+const ALLOWED_EXTENSIONS = new Set([
+  "jpg",
+  "jpeg",
+  "png",
+  "webp",
+  "mp4",
+  "webm",
+  "mov",
+  "avi",
+  "mp3",
+  "wav",
+  "ogg",
+  "m4a",
+]);
 
 interface Props {
   onSubmit: (formData: FormData) => void;
@@ -17,28 +32,78 @@ export default function MediaUploader({
   onFileChange,
 }: Props) {
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [caption, setCaption] = useState(initialCaption);
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    return () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
+  const clearSelectedFile = useCallback(() => {
+    setFile(null);
+    setPreviewUrl(null);
+    onFileChange?.(null);
+    if (inputRef.current) inputRef.current.value = "";
+  }, [onFileChange]);
+
+  const getExtension = (name: string) => {
+    const parts = name.split(".");
+    return parts.length > 1 ? parts.pop()?.toLowerCase() ?? "" : "";
+  };
+
+  const getMediaType = (f: File) => {
+    const ext = getExtension(f.name);
+
+    if (f.type.startsWith("image/") || ["jpg", "jpeg", "png", "webp"].includes(ext)) {
+      return "GAMBAR";
+    }
+    if (f.type.startsWith("video/") || ["mp4", "webm", "mov", "avi"].includes(ext)) {
+      return "VIDEO";
+    }
+    if (f.type.startsWith("audio/") || ["mp3", "wav", "ogg", "m4a"].includes(ext)) {
+      return "AUDIO";
+    }
+    return null;
+  };
+
+  const openFilePicker = useCallback(() => {
+    inputRef.current?.click();
+  }, []);
+
   const handleFile = useCallback(
     (f: File) => {
       setError("");
-      if (f.size > MAX_SIZE) {
-        setError("Ukuran file melebihi batas 50MB.");
+      const ext = getExtension(f.name);
+
+      if (!ALLOWED_EXTENSIONS.has(ext)) {
+        setError("Format file tidak didukung. Gunakan JPG, PNG, WEBP, MP4, MOV, AVI, MP3, WAV, OGG, atau M4A.");
+        clearSelectedFile();
         return;
       }
+
+      if (f.size > MAX_SIZE) {
+        setError("Ukuran file melebihi batas 50MB.");
+        clearSelectedFile();
+        return;
+      }
+
       setFile(f);
       onFileChange?.(f);
-      if (f.type.startsWith("image/")) {
-        setPreview(URL.createObjectURL(f));
+
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+
+      if (getMediaType(f) !== "AUDIO") {
+        setPreviewUrl(URL.createObjectURL(f));
       } else {
-        setPreview(null);
+        setPreviewUrl(null);
       }
     },
-    [onFileChange]
+    [clearSelectedFile, onFileChange, previewUrl]
   );
 
   const handleDrop = useCallback(
@@ -60,35 +125,38 @@ export default function MediaUploader({
     onSubmit(fd);
   };
 
-  const mediaType = file
-    ? file.type.startsWith("image/")
-      ? "GAMBAR"
-      : file.type.startsWith("video/")
-      ? "VIDEO"
-      : "AUDIO"
-    : null;
+  const mediaType = file ? getMediaType(file) : null;
 
   return (
     <div className="space-y-4">
-      <label
+      <div
+        role="button"
+        tabIndex={0}
         className={`block border-2 border-dashed p-8 cursor-pointer transition-all duration-200 ${
           dragOver
             ? "border-[#E8A838] bg-[#E8A838]/5"
             : "border-[#3A342B] hover:border-[#504535] bg-[#0A0704]"
         }`}
+        onClick={openFilePicker}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openFilePicker();
+          }
+        }}
         onDragOver={(e) => {
           e.preventDefault();
           setDragOver(true);
         }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
-        onClick={() => inputRef.current?.click()}
       >
         <input
           ref={inputRef}
           type="file"
           accept={ACCEPTED_TYPES}
-          className="hidden"
+          className="sr-only"
+          onClick={(e) => e.stopPropagation()}
           onChange={(e) => {
             const f = e.target.files?.[0];
             if (f) handleFile(f);
@@ -97,11 +165,18 @@ export default function MediaUploader({
 
         {file ? (
           <div className="space-y-3 text-center">
-            {preview && (
+            {previewUrl && mediaType === "GAMBAR" && (
               <img
-                src={preview}
+                src={previewUrl}
                 alt="Preview"
                 className="max-h-48 mx-auto border border-[#2C2820]"
+              />
+            )}
+            {previewUrl && mediaType === "VIDEO" && (
+              <video
+                src={previewUrl}
+                controls
+                className="max-h-48 w-full border border-[#2C2820]"
               />
             )}
             <div className="flex items-center justify-center gap-2">
@@ -119,9 +194,7 @@ export default function MediaUploader({
               className="text-xs text-[#9A9080] hover:text-[#FFDAD6] font-sora"
               onClick={(e) => {
                 e.stopPropagation();
-                setFile(null);
-                setPreview(null);
-                onFileChange?.(null);
+                clearSelectedFile();
               }}
             >
               Hapus file
@@ -137,7 +210,7 @@ export default function MediaUploader({
             </p>
           </div>
         )}
-      </label>
+      </div>
 
       {error && (
         <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>

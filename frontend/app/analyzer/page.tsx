@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { Suspense, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import type { InferenceResult, StageInfo, SSEEvent, PipelineStage } from "@/lib/types";
 import { streamAnalysis } from "@/lib/api";
@@ -18,7 +18,7 @@ const INITIAL_STAGES: StageInfo[] = [
 
 type PageState = "idle" | "analyzing" | "result";
 
-export default function AnalyzerPage() {
+function AnalyzerContent() {
   const searchParams = useSearchParams();
   const sampleText = searchParams.get("sample") || "";
 
@@ -149,5 +149,13 @@ export default function AnalyzerPage() {
         />
       )}
     </div>
+  );
+}
+
+export default function AnalyzerPage() {
+  return (
+    <Suspense>
+      <AnalyzerContent />
+    </Suspense>
   );
 }

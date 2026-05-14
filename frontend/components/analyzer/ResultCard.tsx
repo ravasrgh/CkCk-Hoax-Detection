@@ -153,8 +153,7 @@ export default function ResultCard({
               📝 TEKS DIEKSTRAK (OCR)
             </p>
             <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
-              {(result as Record<string, unknown>).teks_yang_dianalisis as string ||
-                "Teks berhasil diekstrak dari konten."}
+              {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
             </p>
           </div>
         )}
@@ -162,8 +161,7 @@ export default function ResultCard({
         {/* Show text-only fallback when no file uploaded and no caption */}
         {!uploadedFile && (!inputCaption || !inputCaption.trim()) && (
           <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
-            {(result as Record<string, unknown>).teks_yang_dianalisis as string ||
-              "Teks berhasil diekstrak dari konten."}
+            {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
           </p>
         )}
 
