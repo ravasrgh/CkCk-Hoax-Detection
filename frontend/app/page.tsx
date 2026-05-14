@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import HeroSection from "@/components/ui/HeroSection";
 
 const LOGOS = [
   { src: "/images/AiConnect.png", alt: "AI Connect" },
@@ -13,61 +14,162 @@ export default function HomePage() {
   return (
     <div className="w-full overflow-x-hidden" style={{ backgroundColor: "var(--bg-canvas)", color: "var(--text-primary)" }}>
 
-      {/* ── SECTION 1: Logo full screen ── */}
+      {/* ── SECTION 1: Logo full screen with floating news cards ── */}
       <section
-        className="flex flex-col items-center justify-center text-center px-12"
+        className="relative flex flex-col items-center justify-center text-center px-12 overflow-hidden"
         style={{ minHeight: "calc(100vh - 42px)", backgroundColor: "var(--bg-canvas)" }}
       >
-        <ScrollReveal direction="up">
+        {/* Edge vignette so cards dissolve at the viewport boundaries */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
+            background: [
+              "radial-gradient(ellipse 60% 55% at 50% 50%, transparent 30%, var(--bg-canvas) 80%)",
+            ].join(","),
+          }}
+        />
+
+        {/* ── Floating card: Berita1 — top-left, tilted -8° ── */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", top: "8%", left: "4%",
+            width: "clamp(180px, 20vw, 260px)",
+            zIndex: 1,
+            transform: "rotate(-8deg)",
+            animation: "float-a 9s ease-in-out infinite",
+            borderRadius: "6px",
+            overflow: "hidden",
+            border: "1px solid var(--border-sidebar)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
+          }}
+        >
           <Image
-            src="/images/CkckLogo.png"
-            alt="CkCk"
-            width={280}
-            height={100}
-            className="object-contain mx-auto mb-6"
-            priority
+            src="/images/Berita1.png"
+            alt="Berita 1"
+            width={260}
+            height={200}
+            className="w-full h-auto object-cover"
+            style={{ display: "block", filter: "brightness(0.75) saturate(0.6)" }}
           />
-          <p className="text-xs uppercase tracking-[0.3em] font-sora" style={{ color: "var(--text-muted)" }}>
-            Deteksi Hoaks · Jaga Privasi
-          </p>
-        </ScrollReveal>
+          <div style={{ padding: "8px 10px", backgroundColor: "var(--bg-card)", borderTop: "1px solid var(--border-main)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--text-dimmer)" }}>BBC Indonesia</p>
+          </div>
+        </div>
+
+        {/* ── Floating card: Berita2 — upper-right, tilted +6° ── */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", top: "12%", right: "3%",
+            width: "clamp(190px, 22vw, 280px)",
+            zIndex: 1,
+            transform: "rotate(6deg)",
+            animation: "float-b 11s ease-in-out infinite",
+            borderRadius: "6px",
+            overflow: "hidden",
+            border: "1px solid var(--border-sidebar)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
+          }}
+        >
+          <Image
+            src="/images/Berita2.png"
+            alt="Berita 2"
+            width={280}
+            height={160}
+            className="w-full h-auto object-cover"
+            style={{ display: "block", filter: "brightness(0.75) saturate(0.6)" }}
+          />
+          <div style={{ padding: "8px 10px", backgroundColor: "var(--bg-card)", borderTop: "1px solid var(--border-main)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--text-dimmer)" }}>detikNews</p>
+          </div>
+        </div>
+
+        {/* ── Floating card: Berita3 — bottom-center-left, tilted -3° ── */}
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", bottom: "10%", left: "50%",
+            transform: "translateX(-50%) rotate(-3deg)",
+            width: "clamp(220px, 30vw, 360px)",
+            zIndex: 1,
+            animation: "float-c 13s ease-in-out infinite",
+            borderRadius: "6px",
+            overflow: "hidden",
+            border: "1px solid var(--border-sidebar)",
+            boxShadow: "0 8px 32px rgba(0,0,0,0.55)",
+          }}
+        >
+          <Image
+            src="/images/Berita3.png"
+            alt="Berita 3"
+            width={360}
+            height={80}
+            className="w-full h-auto object-cover"
+            style={{ display: "block", filter: "brightness(0.75) saturate(0.6)" }}
+          />
+          <div style={{ padding: "8px 10px", backgroundColor: "var(--bg-card)", borderTop: "1px solid var(--border-main)" }}>
+            <p className="font-mono text-[9px] uppercase tracking-widest" style={{ color: "var(--text-dimmer)" }}>Kompas.com</p>
+          </div>
+        </div>
+
+        {/* ── Central content ── */}
+        <div className="relative flex flex-col items-center gap-5" style={{ zIndex: 3 }}>
+          <ScrollReveal direction="up">
+            <Image
+              src="/images/CkckLogo.png"
+              alt="CkCk"
+              width={280}
+              height={100}
+              className="object-contain mx-auto"
+              priority
+            />
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={100}>
+            <p className="text-xs uppercase tracking-[0.3em] font-sora" style={{ color: "var(--text-muted)" }}>
+              Deteksi Hoaks · Jaga Privasi
+            </p>
+          </ScrollReveal>
+          <ScrollReveal direction="up" delay={200}>
+            <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
+              <Link
+                href="/analyzer"
+                className="font-sora font-bold text-sm uppercase tracking-widest px-8 py-3 transition-opacity hover:opacity-75"
+                style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "4px" }}
+              >
+                Mulai Analisis →
+              </Link>
+              <Link
+                href="/tentang"
+                className="font-sora font-semibold text-sm uppercase tracking-widest px-8 py-3 transition-opacity hover:opacity-75"
+                style={{ border: "1px solid var(--border-sidebar)", color: "var(--text-muted)", borderRadius: "4px" }}
+              >
+                Pelajari Lebih
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* Keyframes injected via a style tag — no new CSS file needed */}
+        <style>{`
+          @keyframes float-a {
+            0%,100% { transform: rotate(-8deg) translateY(0px); }
+            50%      { transform: rotate(-8deg) translateY(-14px); }
+          }
+          @keyframes float-b {
+            0%,100% { transform: rotate(6deg) translateY(0px); }
+            50%      { transform: rotate(6deg) translateY(-18px); }
+          }
+          @keyframes float-c {
+            0%,100% { transform: translateX(-50%) rotate(-3deg) translateY(0px); }
+            50%      { transform: translateX(-50%) rotate(-3deg) translateY(-10px); }
+          }
+        `}</style>
       </section>
 
       {/* ── SECTION 2: Hero ── */}
-      <section
-        className="min-h-screen flex flex-col items-center justify-center text-center px-8 md:px-24"
-        style={{ backgroundColor: "var(--bg-canvas)" }}
-      >
-        <div className="max-w-3xl">
-          <ScrollReveal direction="left">
-            <h1
-              className="font-sora font-extrabold leading-tight mb-6"
-              style={{ fontSize: "clamp(2.5rem, 6vw, 4rem)", color: "var(--text-primary)" }}
-            >
-              Deteksi Hoaks<br />
-              <span style={{ color: "var(--text-slogan)" }}>Sepenuhnya Offline</span>
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal direction="right" delay={150}>
-            <p
-              className="font-sora font-light mb-10"
-              style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)", color: "var(--text-muted)", lineHeight: 1.6 }}
-            >
-              AI yang berjalan 100% lokal di perangkat Anda. Analisis konten
-              sebelum dibagikan. Privasi selalu terjaga.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal direction="up" delay={300}>
-            <Link
-              href="/analyzer"
-              className="inline-block font-sora font-bold text-sm uppercase tracking-widest px-10 py-4 transition-opacity hover:opacity-80"
-              style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "4px" }}
-            >
-              Mulai Analisis →
-            </Link>
-          </ScrollReveal>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* ── SECTION 3: Masalah ── */}
       <section
