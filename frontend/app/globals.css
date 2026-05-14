@@ -1,36 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* === BACKGROUNDS === */
-  --bg-canvas:       #111008;
-  --bg-main:         #1e1a13;
-  --bg-card:         #1A1712;
-  --bg-card-alt:     #27231d;
-  --bg-card-deep:    #120D07;
-  --bg-input:        #0A0704;
-  --bg-sidebar:      #27231d;
+  /* === BACKGROUNDS — Dark Mode === */
+  --bg-canvas:       #0a0806;
+  --bg-main:         #1a1510;
+  --bg-card:         #1f1a14;
+  --bg-card-alt:     #2a2218;
+  --bg-card-deep:    #0f0c08;
+  --bg-input:        #0a0704;
+  --bg-sidebar:      #2a2218;
   --bg-sidebar-active: #504535;
-  --bg-header:       #27231d;
+  --bg-header:       #1f1a14;
 
   /* === BORDERS & DIVIDERS === */
-  --border-main:     #2C2820;
-  --border-sidebar:  #3A342B;
-  --border-header:   #27241e;
+  --border-main:     #3a332a;
+  --border-sidebar:  #4a3f38;
+  --border-header:   #3a332a;
 
   /* === TEXT === */
-  --text-primary:    #EDE1D4;
-  --text-secondary:  #D5C4AF;
-  --text-muted:      #9A9080;
-  --text-dimmer:     #58524A;
-  --text-slogan:     #c7bcaa;
+  --text-primary:    #f5ede3;
+  --text-secondary:  #ddd1c4;
+  --text-muted:      #a89a8a;
+  --text-dimmer:     #6b6258;
+  --text-slogan:     #d4a574;
 
   /* === ACCENT === */
-  --accent-primary:  #c7bcaa;
-  --accent-dim:      #9A9080;
-  --accent-amber:    #c7bcaa;
-  --accent-amber-btn:#c7bcaa;
+  --accent-primary:  #d4a574;
+  --accent-dim:      #a89a8a;
+  --accent-amber:    #d4a574;
+  --accent-amber-btn:#d4a574;
 
   /* === STATUS — WASPADAI === */
   --waspadai-bg:     #3D0D0A;
@@ -58,41 +60,67 @@
 
   /* === OFFLINE BADGE === */
   --offline-bg:     #281800;
-  --offline-dot:    #c7bcaa;
+  --offline-dot:    #d4a574;
 }
 
 :root.light-mode {
-  --bg-canvas:       #f9f7f3;
-  --bg-main:         #ede1d4;
-  --bg-card:         #e4d8c8;
-  --bg-card-alt:     #ddd0be;
-  --bg-card-deep:    #f9f7f3;
-  --bg-input:        #f9f7f3;
-  --bg-sidebar:      #e4d8c8;
-  --bg-sidebar-active: #c7bcaa;
-  --bg-header:       #e4d8c8;
+  /* === BACKGROUNDS — Light Mode === */
+  --bg-canvas:       #faf7f3;
+  --bg-main:         #f1e8dd;
+  --bg-card:         #ebe2d4;
+  --bg-card-alt:     #e3d9c9;
+  --bg-card-deep:    #faf7f3;
+  --bg-input:        #faf7f3;
+  --bg-sidebar:      #ebe2d4;
+  --bg-sidebar-active: #d4a574;
+  --bg-header:       #ebe2d4;
 
-  --border-main:     #d5c4af;
-  --border-sidebar:  #c7bcaa;
-  --border-header:   #d5c4af;
+  /* === BORDERS & DIVIDERS === */
+  --border-main:     #d9cfc0;
+  --border-sidebar:  #d4a574;
+  --border-header:   #d9cfc0;
 
-  --text-primary:    #2c2820;
-  --text-secondary:  #4a3f33;
-  --text-muted:      #80694d;
-  --text-dimmer:     #a08060;
-  --text-slogan:     #6b5540;
+  /* === TEXT === */
+  --text-primary:    #2d2622;
+  --text-secondary:  #4a3f35;
+  --text-muted:      #7a6b5a;
+  --text-dimmer:     #9a8a78;
+  --text-slogan:     #8b6f48;
 
-  --accent-primary:  #6b5540;
-  --accent-dim:      #80694d;
-  --accent-amber:    #6b5540;
-  --accent-amber-btn:#6b5540;
+  /* === ACCENT === */
+  --accent-primary:  #8b6f48;
+  --accent-dim:      #7a6b5a;
+  --accent-amber:    #8b6f48;
+  --accent-amber-btn:#8b6f48;
+
+  /* === STATUS — Dark variants for light mode === */
+  --waspadai-bg:     #fceaea;
+  --waspadai-border: #d4574a;
+  --waspadai-text:   #8b3d34;
+
+  --terverifikasi-bg:     #e6f0ff;
+  --terverifikasi-text:   #0c4a80;
+
+  --konteks-bg:       #ffe8c2;
+  --konteks-text:     #8b5c00;
+
+  --netral-bg:        #e8e1d6;
+  --netral-text:      #5a4d42;
+
+  --offline-bg:       #f1e2cc;
+  --offline-dot:      #8b6f48;
 }
 
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: var(--font-sora), sans-serif;
+  font-family: var(--font-sans), sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif), serif;
+  font-weight: 700;
 }
 
 .font-mono,

@@ -22,7 +22,7 @@ export default function HeroSection() {
     >
       {/* ── Gradient mesh background ── */}
       <div aria-hidden className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-        {/* Orb A — warm amber-brown, top-left */}
+        {/* Orb A — warm gold, top-left */}
         <div
           ref={orbARef}
           style={{
@@ -35,13 +35,13 @@ export default function HeroSection() {
             maxHeight: "640px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(199,188,170,0.18) 0%, rgba(199,188,170,0.06) 45%, transparent 70%)",
+              "radial-gradient(circle, rgba(212,165,116,0.15) 0%, rgba(212,165,116,0.04) 45%, transparent 70%)",
             animation: "mesh-orb-a 18s ease-in-out infinite",
             animationPlayState: "paused",
             willChange: "transform",
           }}
         />
-        {/* Orb B — deep amber, bottom-right */}
+        {/* Orb B — muted tan, bottom-right */}
         <div
           ref={orbBRef}
           style={{
@@ -54,13 +54,13 @@ export default function HeroSection() {
             maxHeight: "560px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(154,144,128,0.14) 0%, rgba(154,144,128,0.05) 50%, transparent 72%)",
+              "radial-gradient(circle, rgba(168,154,138,0.12) 0%, rgba(168,154,138,0.03) 50%, transparent 72%)",
             animation: "mesh-orb-b 22s ease-in-out infinite",
             animationPlayState: "paused",
             willChange: "transform",
           }}
         />
-        {/* Orb C — dark gold, center-right */}
+        {/* Orb C — deep brown, center-right */}
         <div
           ref={orbCRef}
           style={{
@@ -73,7 +73,7 @@ export default function HeroSection() {
             maxHeight: "420px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(88,82,74,0.22) 0%, rgba(88,82,74,0.06) 55%, transparent 75%)",
+              "radial-gradient(circle, rgba(107,98,88,0.18) 0%, rgba(107,98,88,0.04) 55%, transparent 75%)",
             animation: "mesh-orb-c 26s ease-in-out infinite",
             animationPlayState: "paused",
             willChange: "transform",
@@ -94,21 +94,21 @@ export default function HeroSection() {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative max-w-3xl w-full flex flex-col items-center gap-6" style={{ zIndex: 1 }}>
+      <div className="relative max-w-4xl w-full flex flex-col items-center gap-8" style={{ zIndex: 1 }}>
 
         {/* Eyebrow label */}
         <p
-          className="font-sora text-xs uppercase tracking-[0.35em]"
+          className="text-xs uppercase tracking-[0.35em] font-medium"
           style={{ color: "var(--text-dimmer)" }}
         >
           Deteksi Hoaks · Jaga Privasi
         </p>
 
-        {/* Heading */}
+        {/* Heading — Serif for premium feel */}
         <h1
-          className="font-sora font-extrabold leading-[1.08]"
+          className="font-serif font-bold leading-[1.1]"
           style={{
-            fontSize: "clamp(2.8rem, 7vw, 5rem)",
+            fontSize: "clamp(2.4rem, 7vw, 5rem)",
             color: "var(--text-primary)",
             letterSpacing: "-0.02em",
           }}
@@ -119,37 +119,35 @@ export default function HeroSection() {
 
         {/* Subheading */}
         <p
-          className="font-sora font-light max-w-xl"
+          className="font-sans font-light max-w-xl leading-relaxed"
           style={{
-            fontSize: "clamp(1rem, 2.2vw, 1.3rem)",
+            fontSize: "clamp(1rem, 2vw, 1.25rem)",
             color: "var(--text-muted)",
-            lineHeight: 1.65,
           }}
         >
-          AI yang berjalan 100% lokal di perangkat Anda.
-          Analisis teks, gambar, dan audio — tanpa internet, tanpa jejak.
+          AI yang berjalan 100% lokal di perangkat Anda. Analisis teks, gambar, dan audio — tanpa internet, tanpa jejak.
         </p>
 
         {/* CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
           <Link
             href="/analyzer"
-            className="font-sora font-bold text-sm uppercase tracking-widest px-9 py-3.5 transition-opacity hover:opacity-75"
+            className="font-sans font-semibold text-sm uppercase tracking-wider px-8 py-3 transition-all duration-200 hover:shadow-lg hover:scale-105"
             style={{
               backgroundColor: "var(--accent-primary)",
               color: "var(--bg-canvas)",
-              borderRadius: "4px",
+              borderRadius: "6px",
             }}
           >
             Mulai Analisis →
           </Link>
           <Link
             href="/tentang"
-            className="font-sora font-semibold text-sm uppercase tracking-widest px-9 py-3.5 transition-opacity hover:opacity-75"
+            className="font-sans font-medium text-sm uppercase tracking-wider px-8 py-3 transition-all duration-200 hover:bg-opacity-10"
             style={{
-              border: "1px solid var(--border-sidebar)",
+              border: "1.5px solid var(--border-sidebar)",
               color: "var(--text-muted)",
-              borderRadius: "4px",
+              borderRadius: "6px",
             }}
           >
             Pelajari Lebih
@@ -161,7 +159,7 @@ export default function HeroSection() {
           className="absolute bottom-[-4rem] left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
           style={{ color: "var(--text-dimmer)" }}
         >
-          <span className="font-sora text-[10px] uppercase tracking-[0.3em]">scroll</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] font-sans">scroll</span>
           <svg width="12" height="20" viewBox="0 0 12 20" fill="none" aria-hidden>
             <rect x="1" y="1" width="10" height="18" rx="5" stroke="currentColor" strokeWidth="1.2" />
             <rect

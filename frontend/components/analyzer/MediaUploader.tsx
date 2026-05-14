@@ -176,18 +176,18 @@ export default function MediaUploader({
               />
             )}
             <div className="flex items-center justify-center gap-2">
-              <span className="text-sm text-[#EDE1D4] font-sora truncate max-w-[300px]">
+              <span className="text-sm text-[#EDE1D4] font-sans truncate max-w-[300px]">
                 {file.name}
               </span>
               {mediaType && (
-                <span className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase tracking-widest text-[#9A9080] font-sora">
+                <span className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase tracking-widest text-[#9A9080] font-sans">
                   {mediaType}
                 </span>
               )}
             </div>
             <button
               type="button"
-              className="text-xs text-[#9A9080] hover:text-[#FFDAD6] font-sora"
+              className="text-xs text-[#9A9080] hover:text-[#FFDAD6] font-sans"
               onClick={(e) => {
                 e.stopPropagation();
                 clearSelectedFile();
@@ -198,10 +198,10 @@ export default function MediaUploader({
           </div>
         ) : (
           <div className="text-center">
-            <p className="text-[#9A9080] text-sm font-sora">
+            <p className="text-[#9A9080] text-sm font-sans">
               Seret &amp; lepas file, atau klik untuk memilih
             </p>
-            <p className="text-[#58524A] text-xs mt-1 font-sora">
+            <p className="text-[#58524A] text-xs mt-1 font-sans">
               Gambar, Video, Teks — maks 50MB
             </p>
           </div>
@@ -212,17 +212,17 @@ export default function MediaUploader({
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
         placeholder="Masukkan teks atau caption untuk dianalisis..."
-        className="w-full bg-[#0A0704] border border-[#2C2820] p-3 text-sm text-[#EDE1D4] placeholder:text-[#58524A] focus:border-[#E8A838] focus:outline-none resize-none h-24 font-sora"
+        className="w-full bg-[#0A0704] border border-[#2C2820] p-3 text-sm text-[#EDE1D4] placeholder:text-[#58524A] focus:border-[#E8A838] focus:outline-none resize-none h-24 font-sans"
       />
 
       {error && (
-        <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
+        <p className="text-[#FFDAD6] text-sm font-sans">{error}</p>
       )}
 
       <button
         onClick={handleSubmit}
         disabled={!file && !caption.trim()}
-        className="w-full h-[46px] bg-[#E8A838] hover:bg-[#FFC66B] disabled:opacity-40 disabled:cursor-not-allowed text-[#120D07] text-xs font-bold tracking-[0.15em] uppercase transition-colors font-sora"
+        className="w-full h-[46px] bg-[#E8A838] hover:bg-[#FFC66B] disabled:opacity-40 disabled:cursor-not-allowed text-[#120D07] text-xs font-bold tracking-[0.15em] uppercase transition-colors font-sans"
       >
         ANALISIS →
       </button>

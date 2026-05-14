@@ -9,14 +9,14 @@ interface Props {
 export default function PipelineProgress({ stages }: Props) {
   return (
     <div className="border border-[#2C2820] bg-[#1A1712] p-4">
-      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-4 font-sora">
+      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-4 font-sans">
         PIPELINE ANALISIS
       </p>
       <div className="flex flex-wrap items-center gap-2">
         {stages.map((stage, i) => (
           <div key={stage.key} className="flex items-center gap-2">
             <div
-              className={`flex items-center gap-2 px-3 py-2 border text-xs uppercase tracking-wider transition-all font-sora ${
+              className={`flex items-center gap-2 px-3 py-2 border text-xs uppercase tracking-wider transition-all font-sans ${
                 stage.status === "complete"
                   ? "border-[#E8A838] text-[#E8A838] bg-[#E8A838]/5"
                   : stage.status === "running"

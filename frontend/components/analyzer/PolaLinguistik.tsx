@@ -44,7 +44,7 @@ export default function PolaLinguistik({ pola, status }: Props) {
 
   return (
     <div className="border border-[#2C2820] bg-[#1A1712] p-4">
-      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-3 font-sora">
+      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-3 font-sans">
         POLA LINGUISTIK
       </p>
       <div className="flex flex-wrap gap-2">
@@ -52,7 +52,7 @@ export default function PolaLinguistik({ pola, status }: Props) {
           <span
             key={label}
             title={desc}
-            className="inline-flex items-center px-3 py-1 text-[11px] font-semibold font-sora whitespace-nowrap cursor-default"
+            className="inline-flex items-center px-3 py-1 text-[11px] font-semibold font-sans whitespace-nowrap cursor-default"
             style={{
               backgroundColor: style.tagBg,
               color: style.tagText,

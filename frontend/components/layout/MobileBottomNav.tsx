@@ -23,7 +23,7 @@ export default function MobileBottomNav() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex flex-col items-center gap-0.5 px-2 py-1 font-sora ${
+            className={`flex flex-col items-center gap-0.5 px-2 py-1 font-sans ${
               active ? "text-[#c7bcaa]" : "text-[#D5C4AF]"
             }`}
           >

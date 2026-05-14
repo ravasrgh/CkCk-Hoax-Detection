@@ -58,7 +58,7 @@ function ConfidenceGauge({ confidence, color }: { confidence: number; color: str
         textAnchor="middle"
         fontSize="18"
         fontWeight="700"
-        fontFamily="var(--font-sora, sans-serif)"
+        fontFamily="var(--font-sans, sans-serif)"
         fill={color}
       >
         {confidence}%
@@ -123,11 +123,11 @@ export default function ResultCard({
             {style.icon}
           </span>
           <div className="flex-1">
-            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase font-sora mb-1" style={{ color: style.text, opacity: 0.7 }}>
+            <p className="text-[10px] font-semibold tracking-[0.2em] uppercase font-sans mb-1" style={{ color: style.text, opacity: 0.7 }}>
               STATUS ANALISIS
             </p>
             <h2
-              className="text-[2rem] font-bold uppercase tracking-wide font-sora leading-tight"
+              className="text-[2rem] font-bold uppercase tracking-wide font-sans leading-tight"
               style={{ color: style.text }}
             >
               {style.label}
@@ -138,7 +138,7 @@ export default function ResultCard({
 
       {/* 2. KONTEN YANG DIANALISIS */}
       <div className="border border-[#2C2820] bg-[#120D07] p-4">
-        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-3 font-sora">
+        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-3 font-sans">
           KONTEN YANG DIANALISIS
         </p>
 
@@ -161,24 +161,24 @@ export default function ResultCard({
         )}
 
         {inputCaption && inputCaption.trim() && (
-          <p className="text-[#EDE1D4] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+          <p className="text-[#EDE1D4] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words">
             {inputCaption}
           </p>
         )}
 
         {uploadedFile && (uploadedFile.type.startsWith("image/") || uploadedFile.type.startsWith("video/")) && (
           <div className="mt-3 p-3 bg-[#1A1712] border border-[#2C2820] rounded">
-            <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] mb-2 font-sora">
+            <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] mb-2 font-sans">
               📝 TEKS DIEKSTRAK (OCR)
             </p>
-            <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+            <p className="text-[#D5C4AF] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words">
               {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
             </p>
           </div>
         )}
 
         {!uploadedFile && (!inputCaption || !inputCaption.trim()) && (
-          <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words">
+          <p className="text-[#D5C4AF] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words">
             {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
           </p>
         )}
@@ -188,7 +188,7 @@ export default function ResultCard({
             {result.sumber_teks.map((src) => (
               <span
                 key={src}
-                className="text-[10px] px-2 py-0.5 bg-[#241F17] text-[#9A9080] border border-[#2C2820] font-sora"
+                className="text-[10px] px-2 py-0.5 bg-[#241F17] text-[#9A9080] border border-[#2C2820] font-sans"
               >
                 [{src.toUpperCase()}]
               </span>
@@ -203,34 +203,34 @@ export default function ResultCard({
       {/* 4. SKOR & PII (2 kolom) */}
       <div className="grid grid-cols-2 gap-px bg-[#2C2820]">
         <div className="bg-[#1A1712] p-4 flex flex-col items-center justify-center">
-          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sora mb-3">
+          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sans mb-3">
             KEMUNGKINAN HOAKS
           </p>
           <ConfidenceGauge confidence={confidence} color={style.gaugeColor} />
-          <p className="text-xs text-[#9A9080] mt-2 font-sora">
+          <p className="text-xs text-[#9A9080] mt-2 font-sans">
             Total: {inferenceMs ?? totalMs}ms
           </p>
         </div>
         <div className="bg-[#1A1712] p-4">
-          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sora">
+          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] font-sans">
             DATA PRIBADI DILINDUNGI
           </p>
           {result.pii_disensor && piiCount > 0 ? (
             <div className="flex flex-wrap gap-1 mt-2">
-              <span className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase text-[#FFC66B] font-sora">
+              <span className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase text-[#FFC66B] font-sans">
                 {piiCount} DIPROTEKSI
               </span>
               {piiDetails?.slice(0, 3).map((pii, i) => (
                 <span
                   key={i}
-                  className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase text-[#9A9080] font-sora"
+                  className="px-2 py-0.5 bg-[#241F17] border border-[#2C2820] text-[10px] uppercase text-[#9A9080] font-sans"
                 >
                   {pii.type}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-[#9A9080] mt-2 font-sora">
+            <p className="text-sm text-[#9A9080] mt-2 font-sans">
               Tidak ada PII terdeteksi
             </p>
           )}
@@ -240,13 +240,13 @@ export default function ResultCard({
       {/* 4b. PROTECTED TEXT PREVIEW (If PII triggered) */}
       {result.pii_disensor && (
         <div className="border border-[#C8352A]/30 bg-[#3D0D0A]/20 p-4">
-          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#FFDAD6] mb-2 font-sora">
+          <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#FFDAD6] mb-2 font-sans">
             🔒 TEKS TERLINDUNGI (PII DISENSOR)
           </p>
-          <p className="text-[#FFDAD6] text-sm leading-relaxed font-sora whitespace-pre-wrap break-words italic">
+          <p className="text-[#FFDAD6] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words italic">
             "{result.teks_aman}"
           </p>
-          <p className="text-[9px] text-[#9A9080] mt-2 font-sora uppercase tracking-wider">
+          <p className="text-[9px] text-[#9A9080] mt-2 font-sans uppercase tracking-wider">
             Informasi sensitif telah diganti dengan karakter blok untuk keamanan Anda.
           </p>
         </div>
@@ -259,10 +259,10 @@ export default function ResultCard({
 
       {/* 6. MENGAPA INI MENCURIGAKAN? */}
       <div className="border border-[#2C2820] bg-[#1A1712] p-4">
-        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-2 font-sora">
+        <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-2 font-sans">
           MENGAPA INI MENCURIGAKAN?
         </p>
-        <p className="text-sm text-[#D5C4AF] leading-relaxed font-sora">
+        <p className="text-sm text-[#D5C4AF] leading-relaxed font-sans">
           {result.penjelasan}
         </p>
       </div>
@@ -274,20 +274,20 @@ export default function ResultCard({
       <div className="grid grid-cols-2 gap-px bg-[#2C2820]">
         <button
           onClick={onReset}
-          className="h-[46px] bg-[#1A1712] hover:bg-[#241F17] border-r border-[#2C2820] text-xs font-bold tracking-[0.15em] uppercase text-[#D5C4AF] hover:text-[#EDE1D4] transition-colors font-sora"
+          className="h-[46px] bg-[#1A1712] hover:bg-[#241F17] border-r border-[#2C2820] text-xs font-bold tracking-[0.15em] uppercase text-[#D5C4AF] hover:text-[#EDE1D4] transition-colors font-sans"
         >
           ↺ ANALISIS ULANG
         </button>
         <button
           onClick={handleCopy}
-          className="h-[45px] bg-[#1A1712] hover:bg-[#241F17] text-xs font-bold tracking-[0.15em] uppercase text-[#D5C4AF] hover:text-[#EDE1D4] transition-colors font-sora"
+          className="h-[45px] bg-[#1A1712] hover:bg-[#241F17] text-xs font-bold tracking-[0.15em] uppercase text-[#D5C4AF] hover:text-[#EDE1D4] transition-colors font-sans"
         >
           {copied ? "✓ TERSALIN!" : "⎘ SALIN HASIL"}
         </button>
       </div>
 
       {/* 9. FOOTER PRIVASI */}
-      <p className="text-center text-xs text-[#9A9080] font-sora py-2">
+      <p className="text-center text-xs text-[#9A9080] font-sans py-2">
         🔒 Analisis dilakukan sepenuhnya di perangkat ini. Data tidak pernah keluar.
       </p>
 
@@ -295,7 +295,7 @@ export default function ResultCard({
       <div>
         <button
           onClick={() => setShowDebug((v) => !v)}
-          className="w-full h-[36px] bg-[#120D07] hover:bg-[#1A1712] border border-[#2C2820] text-[10px] font-semibold tracking-[0.15em] uppercase text-[#58524A] hover:text-[#9A9080] transition-colors font-sora"
+          className="w-full h-[36px] bg-[#120D07] hover:bg-[#1A1712] border border-[#2C2820] text-[10px] font-semibold tracking-[0.15em] uppercase text-[#58524A] hover:text-[#9A9080] transition-colors font-sans"
         >
           {showDebug ? "▲ SEMBUNYIKAN DEBUG" : "▼ DEBUG"}
         </button>

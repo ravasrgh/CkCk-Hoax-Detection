@@ -34,7 +34,7 @@ export default function SideNavBar() {
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-2 px-4 py-3 text-sm transition-colors font-sora"
+              className="flex items-center gap-2 px-4 py-3 text-sm transition-colors font-sans"
               style={{
                 backgroundColor: active ? "var(--bg-sidebar-active)" : "transparent",
                 borderLeft: active ? "3px solid var(--accent-primary)" : "3px solid transparent",
@@ -53,14 +53,14 @@ export default function SideNavBar() {
       <div style={{ borderTop: "1px solid var(--border-sidebar)" }}>
         <div className="px-4 py-3 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full animate-pulse shrink-0" style={{ backgroundColor: "var(--accent-primary)" }} />
-          <span className="text-[10px] uppercase tracking-widest font-sora font-semibold" style={{ color: "var(--accent-primary)" }}>
+          <span className="text-[10px] uppercase tracking-widest font-sans font-semibold" style={{ color: "var(--accent-primary)" }}>
             OFFLINE
           </span>
         </div>
 
         <button
           onClick={toggle}
-          className="w-full flex items-center gap-2 px-4 py-3 text-xs font-sora font-medium uppercase tracking-wide transition-colors"
+          className="w-full flex items-center gap-2 px-4 py-3 text-xs font-sans font-medium uppercase tracking-wide transition-colors"
           style={{ color: "var(--text-muted)", borderTop: "1px solid var(--border-sidebar)" }}
           title="Tutup sidebar"
         >

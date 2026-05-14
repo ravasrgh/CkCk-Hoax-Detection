@@ -29,10 +29,10 @@ export default function AksiCepat({ status }: { status: InferenceStatus }) {
         borderBottom: "1px solid #2C2820",
       }}
     >
-      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-2 font-sora">
+      <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-2 font-sans">
         AKSI CEPAT
       </p>
-      <p className="text-[#D5C4AF] text-sm leading-relaxed font-sora">
+      <p className="text-[#D5C4AF] text-sm leading-relaxed font-sans">
         {aksi}
       </p>
     </div>

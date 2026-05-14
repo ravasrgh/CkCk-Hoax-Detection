@@ -14,10 +14,10 @@ export default function HomePage() {
   return (
     <div className="w-full overflow-x-hidden" style={{ backgroundColor: "var(--bg-canvas)", color: "var(--text-primary)" }}>
 
-      {/* ── SECTION 1: Logo full screen with floating news cards ── */}
+      {/* ── SECTION 1: Logo full screen with floating news cards ── KEEP THIS FIRST ── */}
       <section
         className="relative flex flex-col items-center justify-center text-center px-12 overflow-hidden"
-        style={{ minHeight: "calc(100vh - 42px)", backgroundColor: "var(--bg-canvas)" }}
+        style={{ minHeight: "100vh", backgroundColor: "var(--bg-canvas)" }}
       >
         {/* Edge vignette so cards dissolve at the viewport boundaries */}
         <div
@@ -127,7 +127,7 @@ export default function HomePage() {
             />
           </ScrollReveal>
           <ScrollReveal direction="up" delay={100}>
-            <p className="text-xs uppercase tracking-[0.3em] font-sora" style={{ color: "var(--text-muted)" }}>
+            <p className="text-xs uppercase tracking-[0.3em] font-sans font-medium" style={{ color: "var(--text-muted)" }}>
               Deteksi Hoaks · Jaga Privasi
             </p>
           </ScrollReveal>
@@ -135,15 +135,15 @@ export default function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
               <Link
                 href="/analyzer"
-                className="font-sora font-bold text-sm uppercase tracking-widest px-8 py-3 transition-opacity hover:opacity-75"
-                style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "4px" }}
+                className="font-sans font-semibold text-sm uppercase tracking-wider px-8 py-3 transition-all duration-200 hover:shadow-lg hover:scale-105"
+                style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "6px" }}
               >
                 Mulai Analisis →
               </Link>
               <Link
                 href="/tentang"
-                className="font-sora font-semibold text-sm uppercase tracking-widest px-8 py-3 transition-opacity hover:opacity-75"
-                style={{ border: "1px solid var(--border-sidebar)", color: "var(--text-muted)", borderRadius: "4px" }}
+                className="font-sans font-medium text-sm uppercase tracking-wider px-8 py-3 transition-all duration-200 hover:bg-opacity-10"
+                style={{ border: "1.5px solid var(--border-sidebar)", color: "var(--text-muted)", borderRadius: "6px" }}
               >
                 Pelajari Lebih
               </Link>
@@ -179,7 +179,7 @@ export default function HomePage() {
         <div className="max-w-2xl w-full">
           <ScrollReveal direction="left">
             <h2
-              className="font-sora font-extrabold mb-12"
+              className="font-serif font-bold mb-12"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "var(--text-primary)" }}
             >
               Masalah yang Kami Selesaikan
@@ -187,28 +187,28 @@ export default function HomePage() {
           </ScrollReveal>
           <div className="flex flex-col gap-10">
             <ScrollReveal direction="right" delay={0}>
-              <h3 className="font-sora font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
+              <h3 className="font-serif font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
                 📱 Konten Manipulatif Tersebar dengan Cepat
               </h3>
-              <p className="font-sora text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 Setiap hari, jutaan orang di Indonesia membagikan konten palsu tanpa memikirkan dampaknya.
                 Hoaks, deepfake, dan pesan menakut-nakuti tersebar sebelum ada verifikasi.
               </p>
             </ScrollReveal>
             <ScrollReveal direction="right" delay={120}>
-              <h3 className="font-sora font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
+              <h3 className="font-serif font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
                 🔒 Privasi Data Anda Tidak Terlindungi
               </h3>
-              <p className="font-sora text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 Layanan online mengirim setiap konten ke server mereka. Data pribadi Anda bisa tersimpan,
                 dijual, atau disalahgunakan.
               </p>
             </ScrollReveal>
             <ScrollReveal direction="right" delay={240}>
-              <h3 className="font-sora font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
+              <h3 className="font-serif font-bold text-base mb-2" style={{ color: "var(--text-slogan)" }}>
                 ⚡ CkCk: Solusi Offline &amp; Pribadi
               </h3>
-              <p className="font-sora text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              <p className="font-sans text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 CkCk berjalan 100% di perangkat Anda. Tidak ada koneksi internet. Tidak ada data yang
                 meninggalkan perangkat. Analisis instan dengan AI khusus Bahasa Indonesia.
               </p>
@@ -225,7 +225,7 @@ export default function HomePage() {
         <div className="max-w-3xl w-full">
           <ScrollReveal direction="up">
             <h2
-              className="font-sora font-extrabold mb-12 text-center"
+              className="font-serif font-bold mb-12 text-center"
               style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "var(--text-primary)" }}
             >
               Cara Kerja CkCk
@@ -233,7 +233,7 @@ export default function HomePage() {
           </ScrollReveal>
           <div className="grid md:grid-cols-2 gap-10 items-start">
             <ScrollReveal direction="left">
-              <h3 className="font-sora font-bold text-sm uppercase tracking-widest mb-6" style={{ color: "var(--text-slogan)" }}>
+              <h3 className="font-sans font-semibold text-sm uppercase tracking-widest mb-6" style={{ color: "var(--text-slogan)" }}>
                 Pipeline Analisis 4 Tahap
               </h3>
               <ol className="flex flex-col gap-5">
@@ -248,8 +248,8 @@ export default function HomePage() {
                       0{i + 1}.
                     </span>
                     <div>
-                      <p className="font-sora font-semibold text-sm" style={{ color: "var(--text-primary)" }}>{title}</p>
-                      <p className="font-sora text-xs leading-relaxed mt-0.5" style={{ color: "var(--text-muted)" }}>{desc}</p>
+                      <p className="font-sans font-semibold text-sm" style={{ color: "var(--text-primary)" }}>{title}</p>
+                      <p className="font-sans text-xs leading-relaxed mt-0.5" style={{ color: "var(--text-muted)" }}>{desc}</p>
                     </div>
                   </li>
                 ))}
@@ -285,7 +285,7 @@ export default function HomePage() {
       >
         <ScrollReveal direction="left">
           <h2
-            className="font-sora font-extrabold mb-6"
+            className="font-serif font-bold mb-6"
             style={{ fontSize: "clamp(1.8rem, 4vw, 2.8rem)", color: "var(--text-primary)" }}
           >
             Siap Validasi Semua Informasi?
@@ -293,7 +293,7 @@ export default function HomePage() {
         </ScrollReveal>
         <ScrollReveal direction="right" delay={150}>
           <p
-            className="font-sora text-sm mb-10 max-w-md leading-relaxed"
+            className="font-sans text-sm mb-10 max-w-md leading-relaxed"
             style={{ color: "var(--text-muted)" }}
           >
             Mulai analisis konten sekarang. Semua pemrosesan terjadi di perangkat Anda,
@@ -303,8 +303,8 @@ export default function HomePage() {
         <ScrollReveal direction="up" delay={300}>
           <Link
             href="/analyzer"
-            className="inline-block font-sora font-bold text-sm uppercase tracking-widest px-10 py-4 transition-opacity hover:opacity-80"
-            style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "4px" }}
+            className="inline-block font-sans font-semibold text-sm uppercase tracking-wider px-10 py-4 transition-all duration-200 hover:shadow-lg hover:scale-105"
+            style={{ backgroundColor: "var(--accent-primary)", color: "var(--bg-canvas)", borderRadius: "6px" }}
           >
             Mulai Sekarang →
           </Link>
@@ -312,7 +312,7 @@ export default function HomePage() {
 
         {/* Collaborator logos */}
         <ScrollReveal direction="up" delay={450} className="mt-20 flex flex-col items-center gap-4">
-          <p className="text-[10px] uppercase tracking-widest font-sora" style={{ color: "var(--text-dimmer)" }}>
+          <p className="text-[10px] uppercase tracking-widest font-sans font-medium" style={{ color: "var(--text-dimmer)" }}>
             Berkolaborasi dengan
           </p>
           <div className="flex items-center gap-6">

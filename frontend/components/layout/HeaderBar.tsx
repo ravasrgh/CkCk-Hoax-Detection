@@ -58,7 +58,7 @@ export default function HeaderBar() {
       />
 
       <span
-        className="text-xs tracking-widest uppercase font-sora font-medium"
+        className="text-xs tracking-widest uppercase font-sans font-medium"
         style={{ color: "var(--text-muted)" }}
       >
         Privacy Aware Hoax Detection AI

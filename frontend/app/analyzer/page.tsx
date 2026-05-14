@@ -111,12 +111,12 @@ function AnalyzerContent() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-xs uppercase tracking-widest text-[#9A9080] font-sora font-semibold">
-            ANALISIS KONTEN
+          <h1 className="text-xs uppercase tracking-widest font-sans font-semibold" style={{ color: "var(--text-slogan)" }}>
+            Analisis Konten
           </h1>
-          <p className="text-sm text-[#9A9080] mt-1 font-sora">
+          <p className="text-sm mt-1 font-sans" style={{ color: "var(--text-muted)" }}>
             Deteksi hoaks dengan AI — sepenuhnya offline
           </p>
         </div>
@@ -124,35 +124,35 @@ function AnalyzerContent() {
       </div>
 
       {error && (
-        <div className="mb-4 p-4 bg-[#3D0D0A] border border-[#C8352A]/30">
-          <p className="text-[#FFDAD6] text-sm font-sora">{error}</p>
+        <div className="mb-4 p-4 rounded-lg" style={{ backgroundColor: "var(--waspadai-bg)", border: "1px solid var(--waspadai-border)" }}>
+          <p className="text-sm font-sans" style={{ color: "var(--waspadai-text)" }}>{error}</p>
         </div>
       )}
 
       {state === "idle" && (
         <>
           {!hasAnalyzed && (
-            <div className="mb-8 space-y-6">
+            <div className="mb-8 space-y-8">
               <div className="text-center">
-                <h2 className="text-2xl font-bold font-sora" style={{ color: "#EDE1D4" }}>
+                <h2 className="text-2xl font-serif font-bold mb-3" style={{ color: "var(--text-primary)" }}>
                   Cek sebelum kamu sebar.
                 </h2>
-                <p className="text-sm font-sora mt-2 leading-relaxed" style={{ color: "#9A9080" }}>
+                <p className="text-sm font-sans leading-relaxed" style={{ color: "var(--text-muted)" }}>
                   CkCk menganalisis teks, gambar, dan video untuk mendeteksi pola hoaks<br />
                   — sepenuhnya offline, tanpa data keluar dari perangkatmu.
                 </p>
               </div>
-              <div className="flex items-start justify-center gap-4 text-center">
+              <div className="flex items-start justify-center gap-6 text-center">
                 {STEPS.map((step, i) => (
                   <Fragment key={i}>
-                    <div className="flex flex-col items-center gap-2" style={{ maxWidth: 100 }}>
+                    <div className="flex flex-col items-center gap-2 max-w-100">
                       <span className="text-2xl">{step.icon}</span>
-                      <span className="text-[11px] font-sora leading-tight" style={{ color: "#9A9080" }}>
+                      <span className="text-[11px] font-sans font-medium leading-tight" style={{ color: "var(--text-muted)" }}>
                         {step.label}
                       </span>
                     </div>
                     {i < STEPS.length - 1 && (
-                      <span className="mt-3 font-sora" style={{ color: "#504535" }}>→</span>
+                      <span className="mt-3 font-sans text-sm" style={{ color: "var(--text-dimmer)" }}>→</span>
                     )}
                   </Fragment>
                 ))}
@@ -168,9 +168,9 @@ function AnalyzerContent() {
       )}
 
       {state === "analyzing" && (
-        <div className="space-y-4">
+        <div className="space-y-6">
           <PipelineProgress stages={stages} />
-          <p className="text-center text-sm text-[#9A9080] font-sora animate-pulse">
+          <p className="text-center text-sm font-sans animate-pulse" style={{ color: "var(--text-muted)" }}>
             Menganalisis konten...
           </p>
         </div>

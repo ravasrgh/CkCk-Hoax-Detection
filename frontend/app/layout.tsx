@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Sora, JetBrains_Mono } from "next/font/google";
+import { Merriweather, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import AppShell from "@/components/layout/AppShell";
 import { ThemeProvider } from "@/lib/themeContext";
 
-const sora = Sora({
+const merriweather = Merriweather({
   subsets: ["latin"],
-  variable: "--font-sora",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-serif",
+  weight: ["300", "400", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const mono = JetBrains_Mono({
@@ -27,8 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${sora.variable} ${mono.variable}`}>
-      <body className="antialiased font-sora" style={{ backgroundColor: "var(--bg-main)", color: "var(--text-primary)" }}>
+    <html lang="id" className={`${merriweather.variable} ${inter.variable} ${mono.variable}`}>
+      <body className="antialiased font-sans" style={{ backgroundColor: "var(--bg-main)", color: "var(--text-primary)" }}>
         <ThemeProvider>
           <AppShell>{children}</AppShell>
         </ThemeProvider>

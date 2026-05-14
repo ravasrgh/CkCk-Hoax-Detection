@@ -28,7 +28,7 @@ export default function CollaboratorBar() {
       }}
     >
       <div className="flex items-center gap-3">
-        <span className="text-[#9A9080] text-[10px] font-sora whitespace-nowrap">
+        <span className="text-[#9A9080] text-[10px] font-sans whitespace-nowrap">
           Berkolaborasi dengan:
         </span>
         <div className="flex items-center gap-3">
