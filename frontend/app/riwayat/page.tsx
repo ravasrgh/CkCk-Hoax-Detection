@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { SessionEntry } from "@/lib/types";
-import { getHistory, clearHistory } from "@/lib/api";
+import type { SessionEntry, InferenceResult, StageInfo } from "@/lib/types";
+import { getHistory, clearHistory, getHistoryEntry } from "@/lib/api";
 import StatusBadge from "@/components/ui/StatusBadge";
+import ResultCard from "@/components/analyzer/ResultCard";
 
 const TYPE_LABELS: Record<string, string> = {
   text: "TEKS",
@@ -12,10 +13,20 @@ const TYPE_LABELS: Record<string, string> = {
   audio: "AUDIO",
 };
 
+const COMPLETED_STAGES: StageInfo[] = [
+  { name: "PII FILTER", key: "pii_filter", status: "complete" },
+  { name: "INDOBERT", key: "indobert", status: "complete" },
+  { name: "RULE-BASED", key: "rule_based", status: "complete" },
+  { name: "OUTPUT", key: "output", status: "complete" },
+];
+
 export default function RiwayatPage() {
   const [history, setHistory] = useState<SessionEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedEntry, setSelectedEntry] = useState<SessionEntry | null>(null);
+  const [selectedResult, setSelectedResult] = useState<InferenceResult | null>(null);
+  const [loadingEntry, setLoadingEntry] = useState(false);
 
   const fetchHistory = async () => {
     try {
@@ -41,6 +52,31 @@ export default function RiwayatPage() {
       setError("Gagal menghapus riwayat.");
     }
   };
+
+  const handleSelectEntry = async (entry: SessionEntry) => {
+    setSelectedEntry(entry);
+    setSelectedResult(null);
+    setLoadingEntry(true);
+    try {
+      const result = await getHistoryEntry(entry.id);
+      setSelectedResult(result);
+    } catch {
+      setError("Gagal memuat detail analisis.");
+      setSelectedEntry(null);
+    } finally {
+      setLoadingEntry(false);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setSelectedEntry(null);
+    setSelectedResult(null);
+    setLoadingEntry(false);
+  };
+
+  const totalMs = selectedResult
+    ? ((selectedResult.metadata_media as Record<string, number>)?.inference_time_ms ?? 0)
+    : 0;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -91,7 +127,8 @@ export default function RiwayatPage() {
             return (
               <div
                 key={entry.id}
-                className={`bg-ckck-card border border-ckck-border border-l-4 ${borderColor} rounded-lg p-4`}
+                onClick={() => handleSelectEntry(entry)}
+                className={`bg-ckck-card border border-ckck-border border-l-4 ${borderColor} rounded-lg p-4 cursor-pointer hover:bg-ckck-border/30 transition-colors`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1 min-w-0">
@@ -105,13 +142,61 @@ export default function RiwayatPage() {
                       </span>
                     </div>
                   </div>
-                  <span className="font-mono text-[10px] text-ckck-text-muted whitespace-nowrap">
-                    {new Date(entry.timestamp).toLocaleTimeString("id-ID")}
-                  </span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="font-mono text-[10px] text-ckck-text-muted whitespace-nowrap">
+                      {new Date(entry.timestamp).toLocaleTimeString("id-ID")}
+                    </span>
+                    <span className="text-ckck-text-muted text-xs">›</span>
+                  </div>
                 </div>
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* MODAL DETAIL ANALISIS */}
+      {selectedEntry && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 overflow-y-auto py-6 px-4"
+          onClick={(e) => { if (e.target === e.currentTarget) handleCloseModal(); }}
+        >
+          <div className="w-full max-w-2xl bg-ckck-bg border border-ckck-border rounded-lg overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-ckck-border">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-ckck-text-muted">
+                  DETAIL ANALISIS
+                </p>
+                <p className="text-xs text-ckck-text-muted mt-0.5">
+                  {new Date(selectedEntry.timestamp).toLocaleString("id-ID")}
+                </p>
+              </div>
+              <button
+                onClick={handleCloseModal}
+                className="w-8 h-8 flex items-center justify-center rounded border border-ckck-border text-ckck-text-muted hover:text-ckck-text-primary hover:border-ckck-text-muted transition-colors font-mono text-sm"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-4">
+              {loadingEntry ? (
+                <div className="text-center py-16">
+                  <p className="text-ckck-text-muted font-mono text-sm">Memuat detail...</p>
+                </div>
+              ) : selectedResult ? (
+                <ResultCard
+                  result={selectedResult}
+                  stages={COMPLETED_STAGES}
+                  totalMs={totalMs}
+                  onReset={handleCloseModal}
+                  inputCaption={selectedEntry.input_preview}
+                />
+              ) : null}
+            </div>
+          </div>
         </div>
       )}
     </div>

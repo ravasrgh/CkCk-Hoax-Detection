@@ -89,6 +89,12 @@ export async function clearHistory(): Promise<void> {
   if (!res.ok) throw new Error(`Clear history error: ${res.status}`);
 }
 
+export async function getHistoryEntry(id: string): Promise<InferenceResult> {
+  const res = await fetch(`${BASE}/history/${id}`);
+  if (!res.ok) throw new Error(`History entry error: ${res.status}`);
+  return res.json();
+}
+
 export async function injectConfig(
   updates: Record<string, unknown>
 ): Promise<{ status: string; active_config: Record<string, unknown> }> {

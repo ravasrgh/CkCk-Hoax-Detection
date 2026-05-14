@@ -23,7 +23,7 @@ export default function HeaderBar() {
         className="text-xs tracking-widest uppercase font-sora font-medium ml-3"
         style={{ color: "#c7bcaa" }}
       >
-        GENERIC SLOGAN
+        Privacy Aware Hoax Detection AI
       </span>
     </header>
   );
