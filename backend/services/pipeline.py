@@ -70,6 +70,7 @@ def init_model() -> bool:
                     if not os.path.exists(os.path.join(tokenizer_dir, "tokenizer.json")):
                         tokenizer_dir = _find_tokenizer_dir(AI_REPO_PATH, model_dir)
 
+                    print(f"[INFO] Memuat model ONNX: {onnx_file}")
                     from transformers import AutoTokenizer
                     _detector.tokenizer = AutoTokenizer.from_pretrained(tokenizer_dir, local_files_only=True)
 
@@ -77,18 +78,18 @@ def init_model() -> bool:
                     _detector.ort_session = ort.InferenceSession(onnx_file, providers=["CPUExecutionProvider"])
                     _detector.onnx_mode = True
                     loaded = True
-                    print(f"[INFO] Model ONNX dimuat dari {model_path}")
                 except Exception as e:
-                    print(f"[WARN] ONNX load gagal: {e}, mencoba finetuned/pretrained...")
+                    print(f"[WARN] Gagal memuat ONNX dari {model_path}: {e}")
 
         if not loaded:
             safetensors = os.path.join(model_path, "model.safetensors")
             if os.path.exists(safetensors) and os.path.getsize(safetensors) > 1024:
                 try:
+                    print(f"[INFO] Memuat model PyTorch (Safetensors): {safetensors}")
                     _detector.load_finetuned(model_path)
                     loaded = True
                 except Exception as e:
-                    print(f"[WARN] Finetuned load gagal: {e}, mencoba pretrained...")
+                    print(f"[WARN] Gagal memuat Safetensors dari {model_path}: {e}")
 
         if not loaded:
             print(f"[INFO] Memuat model pretrained: {model_cfg.get('name')}")
@@ -130,7 +131,7 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
     ocr_meta: dict = {}
 
     try:
-        if input_type in ("image", "video") and os.path.isfile(raw_input):
+        if input_type == "image" and os.path.isfile(raw_input):
             result = _ocr_engine.extract(raw_input, caption=caption_user)
             text = result.text
             ocr_meta = {
@@ -138,9 +139,37 @@ def _sync_inference(raw_input: str, input_type: str, caption_user: str) -> dict:
                 "ocr_confidence": result.confidence,
                 "ocr_chars": result.char_count,
             }
-            sources.append("ocr_" + ("gambar" if input_type == "image" else "video"))
+            sources.append("ocr_gambar")
             if caption_user:
                 sources.append("caption_user")
+
+        elif input_type == "video" and os.path.isfile(raw_input):
+            from services.video_handler import extract_frame_at_second
+            frame_path = extract_frame_at_second(raw_input, second=1.0)
+            if frame_path and os.path.exists(frame_path):
+                result = _ocr_engine.extract(frame_path, caption=caption_user)
+                text = result.text
+                ocr_meta = {
+                    "ocr_source": result.source,
+                    "ocr_confidence": result.confidence,
+                    "ocr_chars": result.char_count,
+                    "video_frame_extracted": True,
+                }
+                sources.append("ocr_video_frame")
+                # Clean up temp frame
+                try:
+                    os.unlink(frame_path)
+                except OSError:
+                    pass
+            else:
+                text = caption_user or ""
+                ocr_meta = {"video_frame_extracted": False}
+                sources.append("caption_user")
+            if caption_user and caption_user not in text:
+                text = f"{text} {caption_user}".strip()
+                if "caption_user" not in sources:
+                    sources.append("caption_user")
+
         elif input_type == "audio":
             text = caption_user or ""
             sources.append("caption_user")
