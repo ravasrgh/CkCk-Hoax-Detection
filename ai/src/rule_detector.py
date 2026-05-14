@@ -51,8 +51,11 @@ class RuleBasedDetector:
         r'\bDARURAT\b': 'Menggunakan kata "DARURAT" untuk menciptakan kepanikan',
         r'\b(?:WAJIB|HARUS)\s+(?:BACA|TONTON|LIHAT|SHARE)\b': 'Perintah agresif untuk menyebarkan konten',
         r'[!]{3,}': 'Penggunaan tanda seru berlebihan (!!!) — indikator emosi manipulatif',
-        r'[A-Z\s]{15,}': 'Penggunaan CAPSLOCK berlebihan — indikator sensasionalisme',
     }
+
+    # Capslock pattern — checked separately WITHOUT re.IGNORECASE
+    _CAPSLOCK_PATTERN = re.compile(r'[A-Z\s]{15,}')
+    _CAPSLOCK_DESCRIPTION = 'Penggunaan CAPSLOCK berlebihan — indikator sensasionalisme'
 
     FEAR_PATTERNS = {
         r'\bBAHAYA\b': 'Menggunakan kata "BAHAYA" untuk memicu ketakutan',
@@ -139,7 +142,40 @@ class RuleBasedDetector:
                         description=description,
                     ))
 
+        # Check capslock separately (case-sensitive, no IGNORECASE)
+        matches.extend(self._check_capslock(text))
+
         return matches
+
+    def _check_capslock(self, text: str) -> list[PatternMatch]:
+        """Check for excessive capslock usage (case-sensitive, no IGNORECASE)."""
+        results = []
+        for match in self._CAPSLOCK_PATTERN.finditer(text):
+            segment = match.group()
+            # Only count actual uppercase letters, not spaces
+            alpha_chars = [c for c in segment if c.isalpha()]
+            if len(alpha_chars) < 10:
+                continue  # Not enough letters — skip (probably just spaces)
+
+            upper_ratio = sum(1 for c in alpha_chars if c.isupper()) / len(alpha_chars)
+            if upper_ratio < 0.8:
+                continue  # Less than 80% uppercase — not real capslock abuse
+
+            start = max(0, match.start() - 30)
+            end = min(len(text), match.end() + 30)
+            context = text[start:end].strip()
+            if start > 0:
+                context = "..." + context
+            if end < len(text):
+                context = context + "..."
+
+            results.append(PatternMatch(
+                category="Urgensi Palsu",
+                pattern=segment.strip(),
+                context=context,
+                description=self._CAPSLOCK_DESCRIPTION,
+            ))
+        return results
 
     def get_summary(self, text: str) -> dict:
         """
