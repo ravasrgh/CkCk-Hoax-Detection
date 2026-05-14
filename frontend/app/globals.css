@@ -61,10 +61,38 @@
   --offline-dot:    #c7bcaa;
 }
 
+:root.light-mode {
+  --bg-canvas:       #f9f7f3;
+  --bg-main:         #ede1d4;
+  --bg-card:         #e4d8c8;
+  --bg-card-alt:     #ddd0be;
+  --bg-card-deep:    #f9f7f3;
+  --bg-input:        #f9f7f3;
+  --bg-sidebar:      #e4d8c8;
+  --bg-sidebar-active: #c7bcaa;
+  --bg-header:       #e4d8c8;
+
+  --border-main:     #d5c4af;
+  --border-sidebar:  #c7bcaa;
+  --border-header:   #d5c4af;
+
+  --text-primary:    #2c2820;
+  --text-secondary:  #4a3f33;
+  --text-muted:      #80694d;
+  --text-dimmer:     #a08060;
+  --text-slogan:     #6b5540;
+
+  --accent-primary:  #6b5540;
+  --accent-dim:      #80694d;
+  --accent-amber:    #6b5540;
+  --accent-amber-btn:#6b5540;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
   font-family: var(--font-sora), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-mono,
@@ -81,4 +109,104 @@ pre {
 
 .animate-pulse-amber {
   animation: pulse-amber 1.5s ease-in-out infinite;
+}
+
+/* =====================================================================
+   SCROLL-DRIVEN ANIMATIONS
+   animation-timeline: view() — aktif saat elemen masuk viewport.
+   backwards fill memastikan state awal teraplikasi sebelum animasi mulai.
+===================================================================== */
+
+@keyframes slideInLeft {
+  from { transform: translateX(-80px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(80px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal-left {
+  animation: slideInLeft backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.reveal-right {
+  animation: slideInRight backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.reveal-up {
+  animation: slideInUp backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 240ms; }
+.stagger-4 { animation-delay: 360ms; }
+
+/* =====================================================================
+   INTERSECTION OBSERVER SCROLL REVEAL
+   sr-hidden = state awal (tersembunyi), sr-visible = setelah masuk viewport
+===================================================================== */
+
+.sr-hidden {
+  opacity: 0;
+}
+
+.sr-left  { transform: translateX(-80px); }
+.sr-right { transform: translateX(80px); }
+.sr-up    { transform: translateY(60px); }
+
+.sr-visible {
+  animation: sr-slide-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes sr-slide-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+/* cover-range variants — animasi berlangsung saat elemen menutup viewport */
+@keyframes slideInCover {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0%);    opacity: 1; }
+}
+
+@keyframes slideInCoverRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0%);   opacity: 1; }
+}
+
+@keyframes slideInCoverUp {
+  from { transform: translateY(80px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal-cover-left {
+  animation: slideInCover backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
+
+.reveal-cover-right {
+  animation: slideInCoverRight backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
+
+.reveal-cover-up {
+  animation: slideInCoverUp backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
 }

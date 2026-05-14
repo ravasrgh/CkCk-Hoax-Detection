@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Sora, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import HeaderBar from "@/components/layout/HeaderBar";
-import SideNavBar from "@/components/layout/SideNavBar";
-import MobileBottomNav from "@/components/layout/MobileBottomNav";
-import CollaboratorBar from "@/components/layout/CollaboratorBar";
+import AppShell from "@/components/layout/AppShell";
+import { ThemeProvider } from "@/lib/themeContext";
 
 const sora = Sora({
   subsets: ["latin"],
@@ -30,14 +28,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className={`${sora.variable} ${mono.variable}`}>
-      <body className="text-[#EDE1D4] antialiased font-sora" style={{ backgroundColor: "#1e1a13" }}>
-        <HeaderBar />
-        <SideNavBar />
-        <main className="md:ml-[220px] mt-[42px] min-h-screen pb-20 md:pb-[4vh]">
-          <div className="px-4 py-6 md:px-8 md:py-8">{children}</div>
-        </main>
-        <CollaboratorBar />
-        <MobileBottomNav />
+      <body className="antialiased font-sora" style={{ backgroundColor: "var(--bg-main)", color: "var(--text-primary)" }}>
+        <ThemeProvider>
+          <AppShell>{children}</AppShell>
+        </ThemeProvider>
       </body>
     </html>
   );
