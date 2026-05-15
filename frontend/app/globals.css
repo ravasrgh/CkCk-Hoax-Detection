@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* === BACKGROUNDS — Dark Mode === */
+  --bg-canvas:       #0a0806;
+  --bg-main:         #1a1510;
+  --bg-card:         #1f1a14;
+  --bg-card-alt:     #2a2218;
+  --bg-card-deep:    #0f0c08;
+  --bg-input:        #0a0704;
+  --bg-sidebar:      #2a2218;
+  --bg-sidebar-active: #504535;
+  --bg-header:       #1f1a14;
+
+  /* === BORDERS & DIVIDERS === */
+  --border-main:     #3a332a;
+  --border-sidebar:  #4a3f38;
+  --border-header:   #3a332a;
+
+  /* === TEXT === */
+  --text-primary:    #f5ede3;
+  --text-secondary:  #ddd1c4;
+  --text-muted:      #a89a8a;
+  --text-dimmer:     #6b6258;
+  --text-slogan:     #d4a574;
+
+  /* === ACCENT === */
+  --accent-primary:  #d4a574;
+  --accent-dim:      #a89a8a;
+  --accent-amber:    #d4a574;
+  --accent-amber-btn:#d4a574;
+
+  /* === STATUS — WASPADAI === */
+  --waspadai-bg:     #3D0D0A;
+  --waspadai-header: #690005;
+  --waspadai-border: #C8352A;
+  --waspadai-text:   #FFDAD6;
+  --waspadai-text2:  #FFB4AB;
+  --waspadai-tag-bg: #93000A;
+
+  /* === STATUS — TERVERIFIKASI === */
+  --terverifikasi-bg:     #003256;
+  --terverifikasi-text:   #9BCBFF;
+  --terverifikasi-text2:  #AAD4FF;
+  --terverifikasi-tag-bg: #015184;
+
+  /* === STATUS — KONTEKS BERBEDA === */
+  --konteks-bg:     #432C00;
+  --konteks-text:   #FFC66B;
+  --konteks-tag-bg: #5F3F00;
+
+  /* === STATUS — NETRAL === */
+  --netral-bg:      #3A342B;
+  --netral-text:    #9D8E7C;
+  --netral-tag-bg:  #2F2921;
+
+  /* === OFFLINE BADGE === */
+  --offline-bg:     #281800;
+  --offline-dot:    #d4a574;
+}
+
+:root.light-mode {
+  /* === BACKGROUNDS — Light Mode === */
+  --bg-canvas:       #faf7f3;
+  --bg-main:         #f1e8dd;
+  --bg-card:         #ebe2d4;
+  --bg-card-alt:     #e3d9c9;
+  --bg-card-deep:    #faf7f3;
+  --bg-input:        #faf7f3;
+  --bg-sidebar:      #ebe2d4;
+  --bg-sidebar-active: #d4a574;
+  --bg-header:       #ebe2d4;
+
+  /* === BORDERS & DIVIDERS === */
+  --border-main:     #d9cfc0;
+  --border-sidebar:  #d4a574;
+  --border-header:   #d9cfc0;
+
+  /* === TEXT === */
+  --text-primary:    #2d2622;
+  --text-secondary:  #4a3f35;
+  --text-muted:      #7a6b5a;
+  --text-dimmer:     #9a8a78;
+  --text-slogan:     #8b6f48;
+
+  /* === ACCENT === */
+  --accent-primary:  #8b6f48;
+  --accent-dim:      #7a6b5a;
+  --accent-amber:    #8b6f48;
+  --accent-amber-btn:#8b6f48;
+
+  /* === STATUS — Dark variants for light mode === */
+  --waspadai-bg:     #fceaea;
+  --waspadai-border: #d4574a;
+  --waspadai-text:   #8b3d34;
+
+  --terverifikasi-bg:     #e6f0ff;
+  --terverifikasi-text:   #0c4a80;
+
+  --konteks-bg:       #ffe8c2;
+  --konteks-text:     #8b5c00;
+
+  --netral-bg:        #e8e1d6;
+  --netral-text:      #5a4d42;
+
+  --offline-bg:       #f1e2cc;
+  --offline-dot:      #8b6f48;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif), serif;
+  font-weight: 700;
+}
+
+.font-mono,
+.debug-view,
+code,
+pre {
+  font-family: var(--font-mono), monospace;
+}
+
+/* =====================================================================
+   HERO GRADIENT MESH
+   Three orbs drift independently; CSS custom props keep them themeable.
+===================================================================== */
+
+@keyframes mesh-orb-a {
+  0%   { transform: translate(0%,    0%)    scale(1);    }
+  33%  { transform: translate(8%,   -12%)   scale(1.08); }
+  66%  { transform: translate(-6%,   10%)   scale(0.95); }
+  100% { transform: translate(0%,    0%)    scale(1);    }
+}
+
+@keyframes mesh-orb-b {
+  0%   { transform: translate(0%,   0%)    scale(1);    }
+  40%  { transform: translate(-10%,  8%)   scale(1.06); }
+  70%  { transform: translate(7%,  -9%)    scale(0.97); }
+  100% { transform: translate(0%,   0%)    scale(1);    }
+}
+
+@keyframes mesh-orb-c {
+  0%   { transform: translate(0%,   0%)    scale(1);    }
+  50%  { transform: translate(5%,   14%)   scale(1.1);  }
+  80%  { transform: translate(-8%,  -5%)   scale(0.93); }
+  100% { transform: translate(0%,   0%)    scale(1);    }
+}
+
+@keyframes pulse-amber {
+  0%, 100% { border-color: #c7bcaa; opacity: 1; }
+  50% { border-color: #c7bcaa; opacity: 0.5; }
+}
+
+.animate-pulse-amber {
+  animation: pulse-amber 1.5s ease-in-out infinite;
+}
+
+/* =====================================================================
+   SCROLL-DRIVEN ANIMATIONS
+   animation-timeline: view() — aktif saat elemen masuk viewport.
+   backwards fill memastikan state awal teraplikasi sebelum animasi mulai.
+===================================================================== */
+
+@keyframes slideInLeft {
+  from { transform: translateX(-80px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(80px); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal-left {
+  animation: slideInLeft backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.reveal-right {
+  animation: slideInRight backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.reveal-up {
+  animation: slideInUp backwards;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 120ms; }
+.stagger-3 { animation-delay: 240ms; }
+.stagger-4 { animation-delay: 360ms; }
+
+/* =====================================================================
+   INTERSECTION OBSERVER SCROLL REVEAL
+   sr-hidden = state awal (tersembunyi), sr-visible = setelah masuk viewport
+===================================================================== */
+
+.sr-hidden {
+  opacity: 0;
+}
+
+.sr-left  { transform: translateX(-80px); }
+.sr-right { transform: translateX(80px); }
+.sr-up    { transform: translateY(60px); }
+
+.sr-visible {
+  animation: sr-slide-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes sr-slide-in {
+  0%   { opacity: 0; }
+  100% { opacity: 1; transform: translate(0, 0); }
+}
+
+/* cover-range variants — animasi berlangsung saat elemen menutup viewport */
+@keyframes slideInCover {
+  from { transform: translateX(-100%); opacity: 0; }
+  to   { transform: translateX(0%);    opacity: 1; }
+}
+
+@keyframes slideInCoverRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0%);   opacity: 1; }
+}
+
+@keyframes slideInCoverUp {
+  from { transform: translateY(80px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal-cover-left {
+  animation: slideInCover backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
+
+.reveal-cover-right {
+  animation: slideInCoverRight backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
+
+.reveal-cover-up {
+  animation: slideInCoverUp backwards;
+  animation-timeline: view();
+  animation-range: cover 0% cover 50%;
+}
