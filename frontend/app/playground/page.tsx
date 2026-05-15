@@ -16,13 +16,13 @@ const SAMPLES: Sample[] = [
     label: "TERVERIFIKASI",
   },
   {
-    title: "Harga Cabai di Pasar Badung Denpasar",
-    text: "DENPASAR, KOMPAS.com – Harga cabai rawit merah di Pasar Badung, Denpasar, Bali, turun pada pekan keempat Oktober 2025. Pedagang Pasar Badung, Komang Sari, menyebutkan harga cabai rawit dijual Rp 45.000 per kilogram, turun dari Rp 68.000 per kilogram dua pekan sebelumnya. \"Cabai dari Jember sudah mulai masuk ke pasar sejak awal pekan ini,\" kata Komang Sari, Selasa (21/10/2025). Harga tomat juga ikut turun ke kisaran Rp 8.000 per kilogram dari sebelumnya Rp 12.000 per kilogram, sementara bawang merah stabil di Rp 35.000 per kilogram.",
+    title: "Menlu Sugiono serukan BRICS aktif dalam menjaga perdamaian global",
+    text: "Jakarta (ANTARA) - Menteri Luar (Menlu) Negeri Republik Indonesia Sugiono pada BRICS Foreign Ministers’ Meeting di New Delhi, India, Kamis (14/5), menyerukan agar BRICS, sebagai kekuatan Global South, berperan aktif dalam menjaga perdamaian dan stabilitas global.\“Sebagai kekuatan yang sedang bangkit di Global South, BRICS memiliki kedudukan dan tanggung jawab untuk mengambil peran yang lebih aktif dalam menjaga perdamaian dan melestarikan aturan yang menopang stabilitas global,\” kata Menlu Sugiono sebagaimana dikutip dari pernyataan resmi yang diterima di Jakarta, Jumat. Menlu menekankan bahwa nilai terbesar BRICS terletak pada penguatan suara negara-negara berkembang dalam membentuk tatanan global masa depan. Dirinya mengingatkan agar BRICS senantiasa menjunjung tinggi hukum internasional secara adil, konsisten, dan tanpa standar ganda karena tidak ada negara yang kebal hukum.",
     label: "TERVERIFIKASI",
   },
   {
-    title: "Panen Udang Vaname Sidoarjo",
-    text: "SIDOARJO, KOMPAS.com – Pembudidaya udang vaname di Desa Kalanganyar, Kabupaten Sidoarjo, Jawa Timur, memanen udang hasil tambak pada Oktober 2025. Ketua Kelompok Pembudidaya Ikan Mina Laut, Hendra Wijaya, menyebutkan rata-rata produksi mencapai 18 ton per hektare, lebih tinggi dibanding siklus sebelumnya yang hanya 15 ton per hektare. \"Kualitas benih tahun ini lebih baik dan tidak ada serangan penyakit berarti,\" ujar Hendra, Kamis (23/10/2025). Harga jual udang vaname ukuran 70 ekor per kilogram di tingkat tambak tercatat Rp 52.000 per kilogram.",
+    title: "Trump sebut China ingin terus beli minyak dari Iran",
+    text: "Washingto (ANTARA) - Presiden Amerika Serikat (AS) Donald Trump mengatakan China berencana untuk terus membeli minyak dari Iran. \“Namun pada saat yang sama, dia (Presiden China Xi Jinping) mengatakan bahwa mereka membeli banyak minyak dari sana, dan mereka ingin terus melakukannya,\” kata Trump kepada Fox News, Kamis (14/5). Trump menambahkan bahwa Xi juga ingin Selat Hormuz tetap terbuka. Sebelumnya pada hari yang sama, Gedung Putih menyatakan bahwa pemimpin China itu juga menyampaikan minat Beijing untuk membeli minyak dari Amerika Serikat. Trump sedang melakukan kunjungan kenegaraan ke China pada 13–15 Mei. Pembicaraan Trump dengan Xi berlangsung pada Kamis, ketika pemimpin China itu turut mengangkat isu penjualan senjata Amerika Serikat ke Taiwan.",
     label: "TERVERIFIKASI",
   },
   {
