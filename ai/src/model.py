@@ -215,7 +215,7 @@ class HoaxDetector:
         # Rule-based detector is the sole gatekeeper: if no manipulative
         # patterns are found the content is TERVERIFIKASI regardless of
         # model confidence (the fine-tuned model is biased toward HOAX).
-        if not has_patterns:
+        if not has_patterns and hoax_conf < 0.50:
             status = STATUS_TERVERIFIKASI
         elif hoax_conf >= 0.50:
             # Patterns found and model agrees → WASPADAI
