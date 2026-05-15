@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSidebar } from "@/lib/sidebarContext";
 import { useTheme } from "@/lib/themeContext";
 
@@ -48,14 +49,16 @@ export default function HeaderBar() {
       </button>
 
       {/* Logo */}
-      <Image
-        src={isDark ? "/images/CkckLogodark.png" : "/images/CkckLogo.png"}
-        alt="CkCk Logo"
-        width={72}
-        height={26}
-        className="object-contain"
-        priority
-      />
+      <Link href="/" aria-label="Kembali ke halaman utama">
+        <Image
+          src={isDark ? "/images/CkckLogodark.png" : "/images/CkckLogo.png"}
+          alt="CkCk Logo"
+          width={72}
+          height={26}
+          className="object-contain"
+          priority
+        />
+      </Link>
 
       <span
         className="text-xs tracking-widest uppercase font-sans font-medium"

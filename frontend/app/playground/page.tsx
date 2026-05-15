@@ -11,23 +11,23 @@ interface Sample {
 
 const SAMPLES: Sample[] = [
   {
-    title: "Berita Resmi Pemerintah",
-    text: "Pemerintah Indonesia mengumumkan kebijakan ekonomi baru untuk mendorong pertumbuhan investasi di sektor teknologi.",
+    title: "Makam Tumpang TPU Grogol",
+    text: "JAKARTA, KOMPAS.com – Keterbatasan lahan membuat Taman Pemakaman Umum (TPU) Grogol Kemanggisan di Jakarta Barat menerapkan sistem makam tumpang. Petugas TPU Grogol, Nunu, mengatakan sistem makam tumpang sudah diberlakukan sejak 2016, bersamaan dengan kebijakan penghentian penambahan lahan makam baru. \"Dari 2016, sudah ditutup untuk lahan baru,\" ujar Nunu, Kamis (23/10/2025), dikutip dari Antara. Awalnya, pihak TPU sempat memanfaatkan area bekas gundukan sampah untuk makam baru. Namun, area itu kini sudah habis digunakan. Menurut Nunu, secara aturan Islam, makam maksimal boleh ditumpang tiga kali, namun keterbatasan lahan memaksa pihak TPU melonggarkan aturan hingga lima jenazah dalam satu petak.",
     label: "TERVERIFIKASI",
   },
   {
-    title: "Laporan Cuaca BMKG",
-    text: "BMKG memprediksi cuaca cerah berawan di wilayah Jakarta dan sekitarnya pada hari Selasa.",
+    title: "Harga Cabai di Pasar Badung Denpasar",
+    text: "DENPASAR, KOMPAS.com – Harga cabai rawit merah di Pasar Badung, Denpasar, Bali, turun pada pekan keempat Oktober 2025. Pedagang Pasar Badung, Komang Sari, menyebutkan harga cabai rawit dijual Rp 45.000 per kilogram, turun dari Rp 68.000 per kilogram dua pekan sebelumnya. \"Cabai dari Jember sudah mulai masuk ke pasar sejak awal pekan ini,\" kata Komang Sari, Selasa (21/10/2025). Harga tomat juga ikut turun ke kisaran Rp 8.000 per kilogram dari sebelumnya Rp 12.000 per kilogram, sementara bawang merah stabil di Rp 35.000 per kilogram.",
     label: "TERVERIFIKASI",
   },
   {
-    title: "Pidato Kenegaraan",
-    text: "Presiden menyampaikan pidato kenegaraan di Istana Merdeka pada Senin pagi, membahas program pembangunan nasional.",
+    title: "Panen Udang Vaname Sidoarjo",
+    text: "SIDOARJO, KOMPAS.com – Pembudidaya udang vaname di Desa Kalanganyar, Kabupaten Sidoarjo, Jawa Timur, memanen udang hasil tambak pada Oktober 2025. Ketua Kelompok Pembudidaya Ikan Mina Laut, Hendra Wijaya, menyebutkan rata-rata produksi mencapai 18 ton per hektare, lebih tinggi dibanding siklus sebelumnya yang hanya 15 ton per hektare. \"Kualitas benih tahun ini lebih baik dan tidak ada serangan penyakit berarti,\" ujar Hendra, Kamis (23/10/2025). Harga jual udang vaname ukuran 70 ekor per kilogram di tingkat tambak tercatat Rp 52.000 per kilogram.",
     label: "TERVERIFIKASI",
   },
   {
-    title: "Berita Olahraga",
-    text: "Timnas Indonesia berhasil meraih kemenangan 2-1 atas Malaysia di Piala AFF 2026 setelah pertandingan yang ketat.",
+    title: "Rencana Jokowi Turun Gunung Keliling Indonesia demi Menangkan PSI di 2029",
+    text: "JAKARTA, KOMPAS.com - Mantan Presiden RI Joko Widodo disebut tengah disiapkan untuk turun langsung mendampingi perjuangan Partai Solidaritas Indonesia (PSI) menuju Pemilu 2029. Ketua DPP PSI Bestari Barus mengungkapkan, Jokowi kini telah menjadi bagian dari PSI dan ditetapkan sebagai patron politik partai berlambang gajah tersebut. \“Pak Jokowi itu di PSI sudah gitu. Nah itu satu, dia akan bersama kami, dan kita sudah menetapkan beliau sebagai patron politik daripada perjuangan PSI ke depan gitu. Hanya tinggal nunggu waktu yang tepat saja, mengingat kesehatan beliau,\” ujar Bestari kepada Kompas.com, Kamis (14/5/2026).",
     label: "TERVERIFIKASI",
   },
   {

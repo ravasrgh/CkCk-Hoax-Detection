@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import { useSidebar } from "@/lib/sidebarContext";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home", icon: "🏠" },
-  { href: "/analyzer", label: "Analyzer", icon: "🔍" },
-  { href: "/riwayat", label: "Riwayat", icon: "📋" },
-  { href: "/tentang", label: "Tentang", icon: "ℹ️" },
-  { href: "/playground", label: "Playground", icon: "🧪" },
-  { href: "/status", label: "Status Sistem", icon: "⚙️" },
+  { href: "/", label: "Home" },
+  { href: "/analyzer", label: "Analyzer" },
+  { href: "/riwayat", label: "Riwayat" },
+  { href: "/tentang", label: "Tentang" },
+  { href: "/playground", label: "Playground" },
+  { href: "/status", label: "Status Sistem" },
 ];
 
 export default function SideNavBar() {
@@ -41,7 +41,6 @@ export default function SideNavBar() {
                 color: active ? "var(--text-primary)" : "var(--text-secondary)",
               }}
             >
-              <span className="text-sm">{item.icon}</span>
               <span className="text-xs uppercase tracking-wide font-medium">
                 {item.label}
               </span>

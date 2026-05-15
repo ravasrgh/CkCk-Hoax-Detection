@@ -212,14 +212,17 @@ class HoaxDetector:
         has_patterns = rule_summary["has_manipulative_patterns"]
 
         # Determine status
-        if valid_conf >= 0.75:
+        # Rule-based detector is the sole gatekeeper: if no manipulative
+        # patterns are found the content is TERVERIFIKASI regardless of
+        # model confidence (the fine-tuned model is biased toward HOAX).
+        if not has_patterns:
             status = STATUS_TERVERIFIKASI
-        elif valid_conf >= 0.50:
-            status = STATUS_KONTEKS_BERBEDA
-        elif hoax_conf >= 0.50 and has_patterns:
+        elif hoax_conf >= 0.50:
+            # Patterns found and model agrees → WASPADAI
             status = STATUS_BELUM_WASPADAI
         else:
-            status = STATUS_BELUM_NETRAL
+            # Patterns found but model doesn't strongly agree → KONTEKS BERBEDA
+            status = STATUS_KONTEKS_BERBEDA
 
         # Build explanation in Bahasa Indonesia
         explanation_parts = []

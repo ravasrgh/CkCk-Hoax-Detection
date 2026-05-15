@@ -17,9 +17,9 @@ const INITIAL_STAGES: StageInfo[] = [
 ];
 
 const STEPS = [
-  { icon: "⬆", label: "Upload atau ketik konten" },
-  { icon: "🤖", label: "AI menganalisis secara lokal" },
-  { icon: "📊", label: "Dapatkan hasil & penjelasan" },
+  { label: "Upload atau ketik konten" },
+  { label: "AI menganalisis secara lokal" },
+  { label: "Dapatkan hasil & penjelasan" },
 ];
 
 type PageState = "idle" | "analyzing" | "result";
@@ -146,7 +146,6 @@ function AnalyzerContent() {
                 {STEPS.map((step, i) => (
                   <Fragment key={i}>
                     <div className="flex flex-col items-center gap-2 max-w-100">
-                      <span className="text-2xl">{step.icon}</span>
                       <span className="text-[11px] font-sans font-medium leading-tight" style={{ color: "var(--text-muted)" }}>
                         {step.label}
                       </span>

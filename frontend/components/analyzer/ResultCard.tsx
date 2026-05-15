@@ -169,7 +169,7 @@ export default function ResultCard({
         {uploadedFile && (uploadedFile.type.startsWith("image/") || uploadedFile.type.startsWith("video/")) && (
           <div className="mt-3 p-3 bg-[#1A1712] border border-[#2C2820] rounded">
             <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#9A9080] mb-2 font-sans">
-              📝 TEKS DIEKSTRAK (OCR)
+              TEKS DIEKSTRAK (OCR)
             </p>
             <p className="text-[#D5C4AF] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words">
               {result.teks_yang_dianalisis || "Teks berhasil diekstrak dari konten."}
@@ -241,7 +241,7 @@ export default function ResultCard({
       {result.pii_disensor && (
         <div className="border border-[#C8352A]/30 bg-[#3D0D0A]/20 p-4">
           <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#FFDAD6] mb-2 font-sans">
-            🔒 TEKS TERLINDUNGI (PII DISENSOR)
+            TEKS TERLINDUNGI (PII DISENSOR)
           </p>
           <p className="text-[#FFDAD6] text-sm leading-relaxed font-sans whitespace-pre-wrap break-words italic">
             "{result.teks_aman}"
@@ -257,10 +257,10 @@ export default function ResultCard({
         <PolaLinguistik pola={result.pola_terdeteksi} status={result.status} />
       )}
 
-      {/* 6. MENGAPA INI MENCURIGAKAN? */}
+      {/* 6. MENGAPA INI MENCURIGAKAN? / MENGAPA INI VALID? */}
       <div className="border border-[#2C2820] bg-[#1A1712] p-4">
         <p className="text-[10px] font-semibold tracking-[0.2em] uppercase text-[#9A9080] mb-2 font-sans">
-          MENGAPA INI MENCURIGAKAN?
+          {result.status === "TERVERIFIKASI" ? "MENGAPA INI VALID?" : "MENGAPA INI MENCURIGAKAN?"}
         </p>
         <p className="text-sm text-[#D5C4AF] leading-relaxed font-sans">
           {result.penjelasan}
@@ -288,7 +288,7 @@ export default function ResultCard({
 
       {/* 9. FOOTER PRIVASI */}
       <p className="text-center text-xs text-[#9A9080] font-sans py-2">
-        🔒 Analisis dilakukan sepenuhnya di perangkat ini. Data tidak pernah keluar.
+        Analisis dilakukan sepenuhnya di perangkat ini. Data tidak pernah keluar.
       </p>
 
       {/* 10. DEBUG TOGGLE */}

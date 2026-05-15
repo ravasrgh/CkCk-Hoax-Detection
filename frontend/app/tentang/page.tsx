@@ -80,9 +80,6 @@ export default function TentangPage() {
         </div>
       </div>
 
-      <p className="text-center text-xs text-ckck-text-muted font-mono">
-        FindIT 2026 — Track B: The Privacy Brain (NLP)
-      </p>
     </div>
   );
 }
